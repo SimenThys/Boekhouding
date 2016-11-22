@@ -5,13 +5,15 @@
  */
 package beans;
 
-import javax.ejb.Remote;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author student
  */
-@Remote
-public interface SessionBean2Remote {
-    
+@Stateless
+public class SessionBeanRemote implements SessionBeanRemoteInterface {
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 }

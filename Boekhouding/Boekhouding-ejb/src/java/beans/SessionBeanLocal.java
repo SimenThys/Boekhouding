@@ -5,13 +5,15 @@
  */
 package beans;
 
-import javax.ejb.Local;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author student
  */
-@Local
-public interface SessionBeanLocal {
-    
+@Stateless
+public class SessionBeanLocal implements SessionBeanLocalInterface {
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 }
