@@ -49,3 +49,4 @@ insert into Werknemer values (1,1, 'man',2);
 insert into Werknemer values (2,1, 'boek',1);
 insert into Werknemer values (3,1, 'werk',0);
 insert into Werknemer values (4,1, 'werk',0);
+insert into Werknemer values (5,1, 'werk',0);
