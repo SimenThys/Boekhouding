@@ -14,10 +14,9 @@
         <title>Welkom!</title>
     </head>
     <body>
-        <jsp:include page="fragment.jspf"/>
         <h1>Geef uw gegevens om in te loggen</h1>
-        <form method="post" action="<c:url value="CarControllerURL"/>">
-            <input type="hidden" name="goto" value="reserveer.jsp">
+        <form method="post" action="<c:url value="ResController.do"/>">
+            <input type="hidden" name="goto" value="overzicht">
             Personeelsnummer: <input type="text" name="klantnr"><br>
             Wachtwoord: <input type="password" name="password">
             <input type="submit" value="Volgend">

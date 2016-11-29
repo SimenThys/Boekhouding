@@ -5,12 +5,17 @@
  */
 package ctrl;
 
+import beans.SessionBeanLocal;
+import beans.SessionBeanRemote;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,21 +32,38 @@ public class ResController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private ServletConfig servConf; 
+    
+    @EJB 
+    private SessionBeanLocal statelessbean;
+    
+    @EJB
+    private SessionBeanRemote statefullbean;
+    
+    @Override
+    public void init() throws ServletException {
+        this.servConf = getServletConfig();
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ResController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ResController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession sessie = request.getSession();
+        if (sessie.isNew())
+            System.out.println("Nieuwe sessie!");
+        else
+            System.out.println("Hello again!");
+        String ganaar = request.getParameter("goto");
+        if(ganaar.equals("overzicht"))
+        {
+            
         }
+    }
+    
+    private void gotoPage(String jspnaam, HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException
+    {
+        RequestDispatcher view = request.getRequestDispatcher(jspnaam); 
+        view.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
