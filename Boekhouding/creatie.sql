@@ -17,7 +17,7 @@ drop table Werknemer;
 create table Werknemer
     (wnr integer,
     bnr integer,
-    paswd varchar2(50),
+    paswd varchar(50),
     typ integer,
     primary key(wnr));
 
