@@ -35,10 +35,10 @@ public class ResController extends HttpServlet {
     private ServletConfig servConf; 
     
     @EJB 
-    private SessionBeanLocal statelessbean;
+    private SessionBeanLocal localbean;
     
     @EJB
-    private SessionBeanRemote statefullbean;
+    private SessionBeanRemote remotebean;
     
     @Override
     public void init() throws ServletException {
@@ -51,12 +51,11 @@ public class ResController extends HttpServlet {
         if (sessie.isNew())
             System.out.println("Nieuwe sessie!");
         else
-            System.out.println("Hello again!");
-        String ganaar = request.getParameter("goto");
-        if(ganaar.equals("overzicht"))
         {
-            
-        }
+            System.out.println("Hello again!");
+        }    
+        //String ganaar = request.getParameter("goto");
+        gotoPage("test.jsp",request,response);
     }
     
     private void gotoPage(String jspnaam, HttpServletRequest request, HttpServletResponse response) 

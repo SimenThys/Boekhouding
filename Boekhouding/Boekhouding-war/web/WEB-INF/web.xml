@@ -13,4 +13,92 @@
             30
         </session-timeout>
     </session-config>
+    <security-constraint>
+        <display-name>GeneralConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>GeneralConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>BoekhouderConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>BoekhouderConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/JSP-Boekhouder/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Boekhouder</role-name>
+            <role-name>Boekhouder-Manager</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>WerknemerConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>WerknemerConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/JSP-Werknemer/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Manager</role-name>
+            <role-name>Boekhouder</role-name>
+            <role-name>Werknemer</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ManagerConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ManagerConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/JSP-Manager/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Manager</role-name>
+            <role-name>Boekhouder-Manager</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>BoekhoudingSec</realm-name>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/loginerror.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>Kan eigen onkosten indienen en onkosten goedkeuren. </description>
+        <role-name>Manager</role-name>
+    </security-role>
+    <security-role>
+        <description>Kan eigen onkosten indienen en kredieten bekijken. </description>
+        <role-name>Boekhouder</role-name>
+    </security-role>
+    <security-role>
+        <description>Kan eigen onkosten indienen, bewerken en verwijderen. </description>
+        <role-name>Werknemer</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Administrator</role-name>
+    </security-role>
+    <security-role>
+        <description>Heeft zowel de bevoegdheden van een Boekhouder als van een Manager</description>
+        <role-name>Boekhouder-Manager</role-name>
+    </security-role>
 </web-app>
