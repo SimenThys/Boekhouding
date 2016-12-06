@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,8 +36,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Onkosten.findByOnr", query = "SELECT o FROM Onkosten o WHERE o.onr = :onr"),
     @NamedQuery(name = "Onkosten.findByDatum", query = "SELECT o FROM Onkosten o WHERE o.datum = :datum"),
     @NamedQuery(name = "Onkosten.findByBedrag", query = "SELECT o FROM Onkosten o WHERE o.bedrag = :bedrag"),
-    @NamedQuery(name = "Onkosten.findByStatus", query = "SELECT o FROM Onkosten o WHERE o.status = :status")})
+    @NamedQuery(name = "Onkosten.findByWerknemer", query = "SELECT o FROM Onkosten o WHERE o.wnr = :wnr"),
+    @NamedQuery(name = "Onkosten.findByStatus", query = "SELECT o FROM Onkosten o WHERE o.status = :status"),
+    @NamedQuery(name = "Onkosten.findMax", query = "SELECT max(o.onr) from Onkosten o")})
 public class Onkosten implements Serializable {
+
+    @Size(max = 100)
+    @Column(name = "OMSCHRIJVING")
+    private String omschrijving;
+
+    @JoinColumn(name = "WNR", referencedColumnName = "WNR")
+    @ManyToOne
+    private Werknemer wnr;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -126,6 +137,22 @@ public class Onkosten implements Serializable {
     @Override
     public String toString() {
         return "databaseBeans.Onkosten[ onr=" + onr + " ]";
+    }
+
+    public Werknemer getWnr() {
+        return wnr;
+    }
+
+    public void setWnr(Werknemer wnr) {
+        this.wnr = wnr;
+    }
+
+    public String getOmschrijving() {
+        return omschrijving;
+    }
+
+    public void setOmschrijving(String omschrijving) {
+        this.omschrijving = omschrijving;
     }
     
 }
