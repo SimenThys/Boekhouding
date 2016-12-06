@@ -40,6 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Werknemer.findByTyp", query = "SELECT w FROM Werknemer w WHERE w.typ = :typ")})
 public class Werknemer implements Serializable {
 
+    @OneToMany(mappedBy = "wnr")
+    private Collection<Onkosten> onkostenCollection;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -142,6 +145,15 @@ public class Werknemer implements Serializable {
     @Override
     public String toString() {
         return "databaseBeans.Werknemer[ wnr=" + wnr + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Onkosten> getOnkostenCollection() {
+        return onkostenCollection;
+    }
+
+    public void setOnkostenCollection(Collection<Onkosten> onkostenCollection) {
+        this.onkostenCollection = onkostenCollection;
     }
     
 }

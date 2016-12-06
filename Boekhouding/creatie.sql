@@ -39,10 +39,13 @@ create Table Rekening
 create table Onkosten
     (onr integer,
     knr integer,
+    wnr integer,
     datum date,
     bedrag integer,
     status integer,
+    omschrijving varchar2(100),
     primary key (onr),
+    foreign key(wnr) references Werknemer(wnr),
     foreign key(knr) references Kredieten(knr));
 
 insert into Werknemer values (1,1, 'man',2);
