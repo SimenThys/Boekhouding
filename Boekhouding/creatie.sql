@@ -53,3 +53,7 @@ insert into Werknemer values (2,1, 'boek',1);
 insert into Werknemer values (3,1, 'werk',0);
 insert into Werknemer values (4,1, 'werk',0);
 insert into Werknemer values (5,1, 'werk',0);
+insert into Kredieten values (1,100,0,1);
+insert into Onkosten values (1,1,3,'22/03/2016',10,0,'eerste onkost');
+insert into Onkosten values (2,1,3,'23/03/2016',20,0,'tweede onkost');
+insert into Onkosten values (3,1,3,'24/03/2016',30,0,'derde onkost');

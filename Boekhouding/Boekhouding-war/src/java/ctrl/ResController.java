@@ -9,6 +9,7 @@ import beans.SessionBeanLocalInterface;
 import beans.SessionBeanRemoteInterface;
 import java.io.IOException;
 import javax.ejb.EJB;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -48,27 +49,31 @@ public class ResController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sessie = request.getSession();
-        String ganaar = "JSP-Werknemer/overzicht.jsp";
-        if (sessie.isNew())
+        String ganaar = (String)sessie.getAttribute("ganaar");
+        if(ganaar==null)
         {
-            System.out.println("Nieuwe sessie!");
+            int wnr = Integer.parseInt(request.getUserPrincipal().getName());
+            int type = localbean.OpvragenType(wnr);
+            sessie.setAttribute("wnr", wnr);
+            sessie.setAttribute("type", type);
+            switch(type)
+            {
+                case 0: ganaar = "JSP-Werknemer/overzicht.jsp";
+                        break;
+                case 1: ganaar = "JSP-Boekhouder/keuze-Boekhouder.jsp";
+                        break;
+                case 2: ganaar = "JSP-Manager/keuze-Manager.jsp";
+                        break;
+            }
         }
-        else
+        
+        if(ganaar.equals("JSP-Werknemer/overzicht.jsp"))
         {
-            System.out.println("Hello again!");
+            List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
+            sessie.setAttribute("onkosten", onkosten);
+            System.out.println(onkosten);
         }
-        int wnr = Integer.parseInt(request.getUserPrincipal().getName());
-        int type = localbean.OpvragenType(wnr);
-        sessie.setAttribute("type", type);
-        switch((int)sessie.getAttribute("type"))
-        {
-            case 0: ganaar = "JSP-Werknemer/overzicht.jsp";
-                    break;
-            case 1: ganaar = "JSP-Boekhouder/keuze-Boekhouder.jsp";
-                    break;
-            case 2: ganaar = "JSP-Manager/keuze-Manager.jsp";
-                    break;
-        }
+        
         gotoPage(ganaar,request,response);
     }
     
