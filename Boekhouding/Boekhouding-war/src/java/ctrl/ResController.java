@@ -8,6 +8,7 @@ package ctrl;
 import beans.SessionBeanLocalInterface;
 import beans.SessionBeanRemoteInterface;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -47,29 +48,43 @@ public class ResController extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String stage = request.getParameter("stage");
         HttpSession sessie = request.getSession();
-        String ganaar = "JSP-Werknemer/overzicht.jsp";
-        if (sessie.isNew())
-        {
+        
+        if (stage == null){
+            int wnr = Integer.parseInt(request.getUserPrincipal().getName());
+            int type = localbean.OpvragenType(wnr);
+            sessie.setAttribute("type", type);
+            
+            switch(type)
+            {
+                case 0: gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
+                        break;
+                case 1: gotoPage("JSP-Boekhouder/keuze-Boekhouder.jsp",request,response);
+                        break;
+                case 2: gotoPage("JSP-Manager/keuze-Manager.jsp",request,response);
+                        break;
+            }
+            
             System.out.println("Nieuwe sessie!");
+        }
+        if( stage.equals("boekhouder_keuze")){
+            String keuze = request.getParameter("keuze");
+            if(keuze.equals("overzicht"))
+                gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
+            if(keuze.equals("krediet"))
+            {
+                List kredieten = localbean.OpvragenBoekhouder();
+                sessie.setAttribute("Kredieten", kredieten);
+                gotoPage("JSP-Boekhouder/kredieten.jsp",request,response);
+            }
         }
         else
         {
             System.out.println("Hello again!");
+            gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
         }
-        int wnr = Integer.parseInt(request.getUserPrincipal().getName());
-        int type = localbean.OpvragenType(wnr);
-        sessie.setAttribute("type", type);
-        switch((int)sessie.getAttribute("type"))
-        {
-            case 0: ganaar = "JSP-Werknemer/overzicht.jsp";
-                    break;
-            case 1: ganaar = "JSP-Boekhouder/keuze-Boekhouder.jsp";
-                    break;
-            case 2: ganaar = "JSP-Manager/keuze-Manager.jsp";
-                    break;
-        }
-        gotoPage(ganaar,request,response);
     }
     
     private void gotoPage(String jspnaam, HttpServletRequest request, HttpServletResponse response) 

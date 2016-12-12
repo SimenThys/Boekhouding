@@ -17,7 +17,7 @@ drop table Werknemer;
 create table Werknemer
     (wnr integer,
     bnr integer,
-    paswd varchar(50),
+    paswd varchar2(50),
     typ integer,
     primary key(wnr));
 
@@ -53,3 +53,8 @@ insert into Werknemer values (2,1, 'boek',1);
 insert into Werknemer values (3,1, 'werk',0);
 insert into Werknemer values (4,1, 'werk',0);
 insert into Werknemer values (5,1, 'werk',0);
+
+insert into Kredieten values (1,100,0,1);
+insert into Kredieten values (2,9900,0,1);
+insert into Kredieten values (3,500,1,1);
+insert into Kredieten values (4,10,1,1);
