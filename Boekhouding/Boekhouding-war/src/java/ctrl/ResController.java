@@ -52,21 +52,23 @@ public class ResController extends HttpServlet {
         if (sessie.isNew())
         {
             System.out.println("Nieuwe sessie!");
-            int wnr = Integer.parseInt(request.getParameter("j_username"));
-            int type = localbean.OpvragenType(wnr);
-            sessie.setAttribute("type", type);
-            switch((int)sessie.getAttribute("type"))
-            {
-                case 0: ganaar = "JSP-Werknemer/overzicht.jsp";
-                        break;
-                case 1: ganaar = "JSP-Boekhouder/keuze-Boekhouder.jsp";
-                        break;
-            } 
         }
         else
         {
             System.out.println("Hello again!");
-        }        
+        }
+        int wnr = Integer.parseInt(request.getUserPrincipal().getName());
+        int type = localbean.OpvragenType(wnr);
+        sessie.setAttribute("type", type);
+        switch((int)sessie.getAttribute("type"))
+        {
+            case 0: ganaar = "JSP-Werknemer/overzicht.jsp";
+                    break;
+            case 1: ganaar = "JSP-Boekhouder/keuze-Boekhouder.jsp";
+                    break;
+            case 2: ganaar = "JSP-Manager/keuze-Manager.jsp";
+                    break;
+        }
         gotoPage(ganaar,request,response);
     }
     
