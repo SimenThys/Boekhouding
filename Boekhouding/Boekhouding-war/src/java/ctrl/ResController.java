@@ -8,6 +8,7 @@ package ctrl;
 import beans.SessionBeanLocalInterface;
 import beans.SessionBeanRemoteInterface;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -46,35 +47,41 @@ public class ResController extends HttpServlet {
         this.servConf = getServletConfig();
     }
     
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String ganaar = request.getParameter("ganaar");
         HttpSession sessie = request.getSession();
-        String ganaar = (String)sessie.getAttribute("ganaar");
-        if(ganaar==null)
-        {
+        
+        if (ganaar == null){
             int wnr = Integer.parseInt(request.getUserPrincipal().getName());
             int type = localbean.OpvragenType(wnr);
-            sessie.setAttribute("wnr", wnr);
             sessie.setAttribute("type", type);
+            sessie.setAttribute("wnr", wnr);
             switch(type)
             {
-                case 0: ganaar = "JSP-Werknemer/overzicht.jsp";
+                case 0: ganaar="werknemer_overzicht";
                         break;
-                case 1: ganaar = "JSP-Boekhouder/keuze-Boekhouder.jsp";
+                case 1: gotoPage("JSP-Boekhouder/keuze-Boekhouder.jsp",request,response);
                         break;
-                case 2: ganaar = "JSP-Manager/keuze-Manager.jsp";
+                case 2: gotoPage("JSP-Manager/keuze-Manager.jsp",request,response);
                         break;
             }
         }
         
-        if(ganaar.equals("JSP-Werknemer/overzicht.jsp"))
+        if(ganaar.equals("boekhouder_krediet")){
+            List kredieten = localbean.OpvragenBoekhouder();
+            sessie.setAttribute("Kredieten", kredieten);
+            gotoPage("JSP-Boekhouder/kredieten.jsp",request,response);
+        }
+        
+        if(ganaar.equals("werknemer_overzicht"))
         {
             List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
             sessie.setAttribute("onkosten", onkosten);
-            System.out.println(onkosten);
+            gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
         }
-        
-        gotoPage(ganaar,request,response);
     }
     
     private void gotoPage(String jspnaam, HttpServletRequest request, HttpServletResponse response) 

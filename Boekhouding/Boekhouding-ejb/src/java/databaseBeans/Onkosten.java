@@ -101,6 +101,20 @@ public class Onkosten implements Serializable {
     public BigInteger getStatus() {
         return status;
     }
+    
+    public String getNaamStatus() {
+        int status2 = status.intValue();
+        if(status2 == 0)
+            return "In aanmaak";
+        if(status2 == 1)
+            return "Doorgestuurd";
+        if(status2 == 2)
+            return "Betaald";
+        if(status2 == 3)
+            return "Afgekeurd";
+        else
+            return "Geen status";
+    }
 
     public void setStatus(BigInteger status) {
         this.status = status;

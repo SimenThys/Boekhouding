@@ -33,10 +33,10 @@
                     ${onkost.getDatum()}
                 </td>
                 <td>
-                    ${onkost.getBedrag()}
+                    €${onkost.getBedrag()}
                 </td>
                 <td>
-                    ${onkost.getStatus()}
+                    ${onkost.getNaamStatus()}
                 </td>
             </tr>
             </c:forEach>
