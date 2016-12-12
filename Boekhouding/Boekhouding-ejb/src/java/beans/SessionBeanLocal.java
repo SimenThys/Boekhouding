@@ -32,6 +32,11 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
+    public int OpvragenType(int wnr){
+        Werknemer w = em.find(Werknemer.class, new BigDecimal(wnr));
+        return w.getTyp().intValue();
+    }
+    
     public List OpvragenWerknemer(int wnr){
         Werknemer w = em.find(Werknemer.class, new BigDecimal(wnr));
         return em.createNamedQuery("Onkosten.findByWerknemer").setParameter("wnr", w).getResultList();
