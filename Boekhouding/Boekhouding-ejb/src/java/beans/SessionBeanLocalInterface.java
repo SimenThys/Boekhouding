@@ -24,6 +24,7 @@ import javax.ejb.Local;
 @Local
 public interface SessionBeanLocalInterface {
     
+    public int OpvragenType(int wnr);
     public List OpvragenWerknemer(int wnr);
     public List OpvragenBoekhouder();
     public Map <Kredieten, Integer> OpvragenOnkostAanvragen(int wnr,int saldo);
