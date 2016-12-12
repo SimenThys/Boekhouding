@@ -55,7 +55,7 @@ public class ResController extends HttpServlet {
             System.out.println("Hello again!");
         }    
         //String ganaar = request.getParameter("goto");
-        gotoPage("test.jsp",request,response);
+        gotoPage("JSP-Werknemer/status.jsp",request,response);
     }
     
     private void gotoPage(String jspnaam, HttpServletRequest request, HttpServletResponse response) 
