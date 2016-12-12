@@ -17,6 +17,9 @@
     <role-name>Boekhouder-Manager</role-name>
     <group-name>3</group-name>
   </security-role-mapping>
+  <servlet>
+    <servlet-name>ResController</servlet-name>
+  </servlet>
   <class-loader delegate="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">

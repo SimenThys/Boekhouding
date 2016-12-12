@@ -5,8 +5,8 @@
  */
 package ctrl;
 
-import beans.SessionBeanLocal;
-import beans.SessionBeanRemote;
+import beans.SessionBeanLocalInterface;
+import beans.SessionBeanRemoteInterface;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -35,10 +35,10 @@ public class ResController extends HttpServlet {
     private ServletConfig servConf; 
     
     @EJB 
-    private SessionBeanLocal localbean;
+    private SessionBeanLocalInterface localbean;
     
     @EJB
-    private SessionBeanRemote remotebean;
+    private SessionBeanRemoteInterface remotebean;
     
     @Override
     public void init() throws ServletException {
@@ -48,15 +48,26 @@ public class ResController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sessie = request.getSession();
+        String ganaar = "JSP-Werknemer/overzicht.jsp";
         if (sessie.isNew())
+        {
             System.out.println("Nieuwe sessie!");
+            int wnr = Integer.parseInt(request.getParameter("j_username"));
+            int type = localbean.OpvragenType(wnr);
+            sessie.setAttribute("type", type);
+            switch((int)sessie.getAttribute("type"))
+            {
+                case 0: ganaar = "JSP-Werknemer/overzicht.jsp";
+                        break;
+                case 1: ganaar = "JSP-Boekhouder/keuze-Boekhouder.jsp";
+                        break;
+            } 
+        }
         else
         {
             System.out.println("Hello again!");
-        }    
-        //String ganaar = request.getParameter("goto");
-        
-        gotoPage("JSP-Werknemer/status.jsp",request,response);
+        }        
+        gotoPage(ganaar,request,response);
     }
     
     private void gotoPage(String jspnaam, HttpServletRequest request, HttpServletResponse response) 
