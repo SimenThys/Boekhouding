@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -26,17 +27,27 @@
                 <th>
                    Status 
                 </th>
+                <th>
+                   Bekijken/Bewerken
+                </th>
             </tr>
             <c:forEach var="onkost" items="${onkosten}">
             <tr>
                 <td>
-                    ${onkost.getDatum()}
+                    <fmt:formatDate type="date" pattern="dd/MM/yyyy" value="${onkost.getDatum()}"/>
                 </td>
                 <td>
                     €${onkost.getBedrag()}
                 </td>
                 <td>
                     ${onkost.getNaamStatus()}
+                </td>
+                <td>
+                    <form method="post" action="<c:url value='/ResController.do' />">
+                        <input type="hidden" name="ganaar" value="overzicht_status"/>
+                        <input type="hidden" name="vraagonkostop" value="${onkost.getOnr()}"/>
+                        <button type="submit">Bewerken</button>
+                    </form>
                 </td>
             </tr>
             </c:forEach>

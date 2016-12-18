@@ -17,7 +17,7 @@
         <table>
             <tbody>
                 <tr><th>knr</th><th>Saldo</th><th>Type: 1=gewaarborgd</th></tr>
-                <c:forEach var="krediet" items="${Kredieten}">
+                <c:forEach var="krediet" items="${kredieten}">
                     <tr><td>${krediet.getKnr()}</td><td>${krediet.getSaldo()}</td><td>${krediet.getTyp()}</td></tr>
                 </c:forEach>
             </tbody>

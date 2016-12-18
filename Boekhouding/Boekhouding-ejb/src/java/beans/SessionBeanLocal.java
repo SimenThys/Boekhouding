@@ -79,7 +79,7 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         return em.createNamedQuery("Kredieten.findByKnr").setParameter("knr", new BigDecimal(knr)).getResultList();
     }
     public List OpvragenOnkost(int onr){
-        return em.createNamedQuery("Onkosten.findByOnr").setParameter("knr", new BigDecimal(onr)).getResultList();
+        return em.createNamedQuery("Onkosten.findByOnr").setParameter("onr", new BigDecimal(onr)).getResultList();
     }
     
     public void OnkostToevoegen(int knr, Date datum, int bedrag, String omschrijving){

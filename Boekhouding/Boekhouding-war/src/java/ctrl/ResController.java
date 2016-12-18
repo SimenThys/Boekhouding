@@ -7,6 +7,7 @@ package ctrl;
 
 import beans.SessionBeanLocalInterface;
 import beans.SessionBeanRemoteInterface;
+import databaseBeans.Onkosten;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -70,9 +71,10 @@ public class ResController extends HttpServlet {
             }
         }
         
-        if(ganaar.equals("boekhouder_krediet")){
+        if(ganaar.equals("boekhouder_krediet"))
+        {
             List kredieten = localbean.OpvragenBoekhouder();
-            sessie.setAttribute("Kredieten", kredieten);
+            sessie.setAttribute("kredieten", kredieten);
             gotoPage("JSP-Boekhouder/kredieten.jsp",request,response);
         }
         
@@ -81,6 +83,31 @@ public class ResController extends HttpServlet {
             List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
             sessie.setAttribute("onkosten", onkosten);
             gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
+        }
+        
+        if(ganaar.equals("overzicht_status"))
+        {
+            List onkost = localbean.OpvragenOnkost(Integer.parseInt(request.getParameter("vraagonkostop")));
+            request.setAttribute("gevraagdeonkost",onkost);
+            gotoPage("JSP-Werknemer/status.jsp",request,response);
+        }
+        
+        if(ganaar.equals("status_overzicht"))
+        {
+            gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
+        }
+        
+        if(ganaar.equals("status_keuze"))
+        {
+            String keuze = request.getParameter("keuze");
+            if(keuze.equals("Tijdelijk opslaan"))
+            {
+                 Onkosten onkost = (Onkosten)localbean.OpvragenOnkost((int)request.getAttribute("onr")).get(0);
+            }
+            if(keuze.equals("Doorsturen"))
+            {
+                
+            }
         }
     }
     

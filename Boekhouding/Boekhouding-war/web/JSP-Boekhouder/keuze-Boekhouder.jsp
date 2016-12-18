@@ -15,10 +15,10 @@
     <body>
         <h1>Boekhouder! Welkom, uw klantennr is ${sessionScope.nummer}</h1>
         <form method="post" action="<c:url value='/ResController.do' />">
-        <!--<input type="hidden" value="boekhouder_keuze" name="ganaar"/>-->
-        <input type="radio" name="ganaar" value="werknemer_overzicht">Eigen onkost indienen<br>
-        <input type="radio" name="ganaar" value="boekhouder_krediet">Kredieten bekijken<br>
-        <input type='submit' value='Reserveren'>
-        
+            <!--<input type="hidden" value="boekhouder_keuze" name="ganaar"/>-->
+            <input type="radio" name="ganaar" value="werknemer_overzicht">Eigen onkost indienen<br>
+            <input type="radio" name="ganaar" value="boekhouder_krediet">Kredieten bekijken<br>
+            <input type="submit" value="Reserveren">
+        </form>
     </body>
 </html>
