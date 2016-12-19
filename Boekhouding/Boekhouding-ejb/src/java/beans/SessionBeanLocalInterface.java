@@ -31,5 +31,9 @@ public interface SessionBeanLocalInterface {
     public Map <Kredieten, Integer> GetKredieten(Map<Kredieten, Integer> items,int wnr,int saldo);
     public Kredieten OpvragenKrediet(int knr);
     public Onkosten OpvragenOnkost(int onr);
-    public void OnkostToevoegen(int knr, Date datum, int bedrag, String omschrijving);
+    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving);
+    public void OnkostToevoegen(Onkosten o);
+    public void OnkostVerwijderen(int onr);
+    public void editOnkost(int bedrag,int onr,String omschrijving);
+    public Onkosten tempOnkost(int wnr);
 }

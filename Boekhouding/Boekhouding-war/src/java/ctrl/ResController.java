@@ -9,8 +9,6 @@ import beans.SessionBeanLocalInterface;
 import beans.SessionBeanRemoteInterface;
 import databaseBeans.Onkosten;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.List;
 import javax.ejb.EJB;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -89,6 +87,7 @@ public class ResController extends HttpServlet {
         if(ganaar.equals("overzicht_status"))
         {
             Onkosten onkost = (Onkosten)localbean.OpvragenOnkost(Integer.parseInt(request.getParameter("vraagonkostop")));
+            request.setAttribute("isnieuw","oud");
             request.setAttribute("gevraagdeonkost",onkost);
             gotoPage("JSP-Werknemer/status.jsp",request,response);
         }
@@ -102,8 +101,13 @@ public class ResController extends HttpServlet {
         {
             String keuze = request.getParameter("keuze");
             if(keuze.equals("Tijdelijk opslaan"))
-            {
-                 Onkosten onkost = (Onkosten)localbean.OpvragenOnkost((int)request.getAttribute("onr"));
+            {   
+                if(request.getParameter("isnieuw").equals("nieuw"))
+                    localbean.OnkostToevoegen((int)sessie.getAttribute("wnr"),Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"));
+                localbean.editOnkost(Integer.parseInt(request.getParameter("bedrag")),Integer.parseInt(request.getParameter("onr")),request.getParameter("omschr"));    
+                List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
+                sessie.setAttribute("onkosten", onkosten);
+                gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
             }
             if(keuze.equals("Doorsturen"))
             {
@@ -113,6 +117,22 @@ public class ResController extends HttpServlet {
             {
                 gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
             }
+        }
+            
+        if(ganaar.equals("overzicht_nieuw"))
+        {
+            Onkosten onkost = localbean.tempOnkost((int)sessie.getAttribute("wnr"));
+            request.setAttribute("isnieuw","nieuw");
+            request.setAttribute("gevraagdeonkost",onkost);
+            gotoPage("JSP-Werknemer/status.jsp",request,response);
+        }
+        if(ganaar.equals("overzicht_overzicht"))
+        {
+            int verwijder = Integer.parseInt(request.getParameter("verwijder"));
+            localbean.OnkostVerwijderen(verwijder);
+            List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
+            sessie.setAttribute("onkosten", onkosten);
+            gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
         }
     }
     

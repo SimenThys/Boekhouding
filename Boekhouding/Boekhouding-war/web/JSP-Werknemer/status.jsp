@@ -18,70 +18,72 @@
             <%-- Wanneer status in aanmaak is en de werknemer deze zelf heeft aangemaakt: toon formulier om aan te passen. --%>
             <c:when test="${gevraagdeonkost.getStatus() == 0 and 
                             gevraagdeonkost.getWnr().getWnr()== wnr}">
-                <form  method="post" action="<c:url value='/ResController.do' />">
-                    <input type="hidden" name="ganaar" value="status_keuze"/>
-                    <table>
-                        <tr>
-                            <td>
-                                Onkostnr.
-                            </td>
-                            <td>
-                                ${gevraagdeonkost.getOnr()}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Kredietnr.
-                            </td>
-                            <td>
-                                <%-- Nog niet gekozen, pas in volgende stap --%>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Werknemernr.
-                            </td>
-                            <td>
-                                ${wnr}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Datum ingediend
-                            </td>
-                            <td>
-                                <%-- Ligt nog niet vast, pas na indienen --%>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Bedrag
-                            </td>
-                            <td>
-                                €<input type="text" name="bedrag" value="${gevraagdeonkost.getBedrag()}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Status
-                            </td>
-                            <td>
-                                ${gevraagdeonkost.getNaamStatus()}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Omschrijving
-                            </td>
-                            <td>
-                                <textarea name="omschr"/>${gevraagdeonkost.getOmschrijving()}</textarea>
-                            </td>
-                        </tr>
-                    </table>
-                    <input type="submit" name="keuze" value="Vorige"/>
-                    <input type="submit" name="keuze" value="Tijdelijk opslaan"/>
-                    <input type="submit" name="keuze" value="Doorsturen"/>
-                </form>
+                    <form  method="post" action="<c:url value='/ResController.do' />">
+                        <input type="hidden" name="ganaar" value="status_keuze"/>
+                        <input type="hidden" name="isnieuw" value="${isnieuw}"/>
+                        <table>
+                            <tr>
+                                <td>
+                                    Onkostnr.
+                                </td>
+                                <td>
+                                    ${gevraagdeonkost.getOnr()}
+                                    <input type="hidden" name="onr" value="${gevraagdeonkost.getOnr()}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Kredietnr.
+                                </td>
+                                <td>
+                                    <%-- Nog niet gekozen, pas in volgende stap --%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Werknemernr.
+                                </td>
+                                <td>
+                                    ${wnr}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Datum ingediend
+                                </td>
+                                <td>
+                                    <%-- Ligt nog niet vast, pas na indienen --%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Bedrag
+                                </td>
+                                <td>
+                                    €<input type="text" name="bedrag" value="${gevraagdeonkost.getBedrag()}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Status
+                                </td>
+                                <td>
+                                    ${gevraagdeonkost.getNaamStatus()}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Omschrijving
+                                </td>
+                                <td>
+                                    <textarea name="omschr"/>${gevraagdeonkost.getOmschrijving()}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="submit" name="keuze" value="Vorige"/>
+                        <input type="submit" name="keuze" value="Tijdelijk opslaan"/>
+                        <input type="submit" name="keuze" value="Doorsturen"/>
+                    </form>
             </c:when>
             <%-- Anders: toon gegevens --%>
             <c:otherwise>

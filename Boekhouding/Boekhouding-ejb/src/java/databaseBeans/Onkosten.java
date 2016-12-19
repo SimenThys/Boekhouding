@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Onkosten.findByBedrag", query = "SELECT o FROM Onkosten o WHERE o.bedrag = :bedrag"),
     @NamedQuery(name = "Onkosten.findByWerknemer", query = "SELECT o FROM Onkosten o WHERE o.wnr = :wnr"),
     @NamedQuery(name = "Onkosten.findByStatus", query = "SELECT o FROM Onkosten o WHERE o.status = :status"),
-    @NamedQuery(name = "Onkosten.findMax", query = "SELECT max(o.onr) from Onkosten o")})
+    @NamedQuery(name = "Onkosten.findMax", query = "SELECT max(o.onr) from Onkosten o"),
+    @NamedQuery(name = "Onkosten.removeOnkost", query = "DELETE FROM Onkosten o WHERE o.onr = :onr")})
 public class Onkosten implements Serializable {
 
     @Size(max = 100)

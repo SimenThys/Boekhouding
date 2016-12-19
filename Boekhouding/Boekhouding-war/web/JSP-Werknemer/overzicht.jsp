@@ -30,6 +30,9 @@
                 <th>
                    Bekijken/Bewerken
                 </th>
+                <th>
+                   Verwijderen
+                </th>
             </tr>
             <c:forEach var="onkost" items="${onkosten}">
             <tr>
@@ -49,8 +52,21 @@
                         <button type="submit">Bekijken</button>
                     </form>
                 </td>
+                <td>
+                    <c:if test="${onkost.getStatus()==0}">
+                    <form method="post" action="<c:url value='/ResController.do' />">
+                        <input type="hidden" name="ganaar" value="overzicht_overzicht"/>
+                        <input type="hidden" name="verwijder" value="${onkost.getOnr()}"/>
+                        <button type="submit">Verwijderen</button>
+                    </form>
+                    </c:if>    
+                </td>
             </tr>
             </c:forEach>
         </table>
+        <form method="post" action="<c:url value='/ResController.do' />">
+            <input type="hidden" name="ganaar" value="overzicht_nieuw"/>
+            <button type="submit">Nieuwe Onkost</button>
+        </form>
     </body>
 </html>
