@@ -4,9 +4,12 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 19-dec-2016, 11:59:37
+    Created on : 19-dec-2016, 13:01:03
     Author     : student
 */
 
-body    {background-color: #832500;}
-h1	{padding:30px 10px 30px 10px; color:#01111E;}
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
