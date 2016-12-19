@@ -75,11 +75,11 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         }
         return items;
     }
-    public List OpvragenKrediet(int knr){
-        return em.createNamedQuery("Kredieten.findByKnr").setParameter("knr", new BigDecimal(knr)).getResultList();
+    public Kredieten OpvragenKrediet(int knr){
+        return (Kredieten)em.createNamedQuery("Kredieten.findByKnr").setParameter("knr", new BigDecimal(knr)).getSingleResult();
     }
-    public List OpvragenOnkost(int onr){
-        return em.createNamedQuery("Onkosten.findByOnr").setParameter("onr", new BigDecimal(onr)).getResultList();
+    public Onkosten OpvragenOnkost(int onr){
+        return (Onkosten)em.createNamedQuery("Onkosten.findByOnr").setParameter("onr", new BigDecimal(onr)).getSingleResult();
     }
     
     public void OnkostToevoegen(int knr, Date datum, int bedrag, String omschrijving){
@@ -96,5 +96,8 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         o.setStatus(new BigInteger(String.valueOf(0)));
         em.persist(o);
         return;
+    }
+    public void setBedrag(int bedrag,int onr){
+        
     }
 }

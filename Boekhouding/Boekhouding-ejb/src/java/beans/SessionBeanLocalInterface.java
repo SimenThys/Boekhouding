@@ -29,7 +29,7 @@ public interface SessionBeanLocalInterface {
     public List OpvragenBoekhouder();
     public Map <Kredieten, Integer> OpvragenOnkostAanvragen(int wnr,int saldo);
     public Map <Kredieten, Integer> GetKredieten(Map<Kredieten, Integer> items,int wnr,int saldo);
-    public List OpvragenKrediet(int knr);
-    public List OpvragenOnkost(int onr);
+    public Kredieten OpvragenKrediet(int knr);
+    public Onkosten OpvragenOnkost(int onr);
     public void OnkostToevoegen(int knr, Date datum, int bedrag, String omschrijving);
 }
