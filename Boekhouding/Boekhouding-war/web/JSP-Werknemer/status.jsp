@@ -66,7 +66,7 @@
                                                 <div class="form-group">
                                                     <div class='input-group date' id='datetimepicker1'>
                                                         <input type='text' class="form-control" />
-                                                        <span class="input-group-addon">
+                                                        <span class="input-group-addon">Kalender 
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>
                                                     </div>
@@ -74,7 +74,14 @@
                                             </div>
                                             <script type="text/javascript">
                                                 $(function () {
-                                                    $('#datetimepicker1').datetimepicker();
+                                                    $('#datetimepicker1').datetimepicker({
+                    defaultDate: "11/1/2013",
+                    disabledDates: [
+                        moment("12/25/2013"),
+                        new Date(2013, 11 - 1, 21),
+                        "11/22/2013 00:53"
+                    ]
+                });
                                                 });
                                             </script>
                                         </div>
