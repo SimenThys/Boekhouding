@@ -32,8 +32,10 @@ public interface SessionBeanLocalInterface {
     public Kredieten OpvragenKrediet(int knr);
     public Onkosten OpvragenOnkost(int onr);
     public void OnkostToevoegen(int wnr, int bedrag, String omschrijving);
+    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving, int knr, Date datum, int status);    
     public void OnkostToevoegen(Onkosten o);
     public void OnkostVerwijderen(int onr);
     public void editOnkost(int bedrag,int onr,String omschrijving);
     public Onkosten tempOnkost(int wnr);
+    public Onkosten tempOnkost(int wnr,int bedrag,String omschr);
 }

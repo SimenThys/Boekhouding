@@ -64,11 +64,11 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         for(Kredieten krediet : kredieten){
             if(krediet.getTyp().intValue() == 0){
                 if(krediet.getSaldo().intValue() - saldo >= 0)
-                    items.put(krediet, 0);
+                    items.put(krediet,0);
             }
             else{
                 if(krediet.getSaldo().intValue() - saldo >= 0)
-                    items.put(krediet, 0);
+                    items.put(krediet,0);
                 else
                     items.put(krediet,1);
             }
@@ -93,6 +93,23 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         o.setBedrag(new BigInteger(String.valueOf(bedrag)));
         o.setOmschrijving(omschrijving);
         o.setStatus(new BigInteger(String.valueOf(0)));
+        em.persist(o);
+    }
+    
+    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving, int knr, Date datum, int status){
+        Onkosten o = new Onkosten();
+        int lastNummer = ((BigDecimal)em.createNamedQuery("Onkosten.findMax").getSingleResult()).intValue();
+        lastNummer += 1;
+        BigDecimal onr =new BigDecimal(lastNummer);
+        o.setOnr(onr);
+        Werknemer werknemer = (Werknemer)em.createNamedQuery("Werknemer.findByWnr").setParameter("wnr", new BigDecimal(wnr)).getSingleResult();
+        o.setWnr(werknemer);
+        o.setBedrag(new BigInteger(String.valueOf(bedrag)));
+        o.setOmschrijving(omschrijving);
+        o.setStatus(new BigInteger(String.valueOf(status)));
+        Kredieten krediet = (Kredieten)em.createNamedQuery("Krediet.findByKnr").setParameter("knr", new BigDecimal(knr)).getSingleResult();
+        o.setKnr(krediet);
+        o.setDatum(datum);
         em.persist(o);
     }
     
@@ -121,6 +138,21 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         o.setWnr(werknemer);
         o.setOmschrijving("");
         o.setBedrag(new BigInteger(String.valueOf(0)));
+        o.setDatum(new Date());
+        o.setStatus(new BigInteger(String.valueOf(0)));
+        return o;
+    }
+    
+    public Onkosten tempOnkost(int wnr,int bedrag,String omschr){
+        Onkosten o = new Onkosten();
+        int lastNummer = ((BigDecimal)em.createNamedQuery("Onkosten.findMax").getSingleResult()).intValue();
+        lastNummer += 1;
+        BigDecimal onr =new BigDecimal(lastNummer);
+        o.setOnr(onr);
+        Werknemer werknemer = (Werknemer)em.createNamedQuery("Werknemer.findByWnr").setParameter("wnr", new BigDecimal(wnr)).getSingleResult();
+        o.setWnr(werknemer);
+        o.setOmschrijving(omschr);
+        o.setBedrag(new BigInteger(String.valueOf(bedrag)));
         o.setDatum(new Date());
         o.setStatus(new BigInteger(String.valueOf(0)));
         return o;
