@@ -46,7 +46,7 @@
                     <form method="post" action="<c:url value='/ResController.do' />">
                         <input type="hidden" name="ganaar" value="overzicht_status"/>
                         <input type="hidden" name="vraagonkostop" value="${onkost.getOnr()}"/>
-                        <button type="submit">Bewerken</button>
+                        <button type="submit">Bekijken</button>
                     </form>
                 </td>
             </tr>

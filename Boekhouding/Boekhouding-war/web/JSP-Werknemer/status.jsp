@@ -13,11 +13,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Status van onkost nr. ${gevraagdeonkost.get(0).getOnr()}</h1>
+        <h1>Status van onkost nr. ${gevraagdeonkost.getOnr()}</h1>
         <c:choose>
             <%-- Wanneer status in aanmaak is en de werknemer deze zelf heeft aangemaakt: toon formulier om aan te passen. --%>
-            <c:when test="${gevraagdeonkost.get(0).getStatus() == 0 and 
-                            gevraagdeonkost.get(0).getWnr().getWnr()== wnr}">
+            <c:when test="${gevraagdeonkost.getStatus() == 0 and 
+                            gevraagdeonkost.getWnr().getWnr()== wnr}">
                 <form  method="post" action="<c:url value='/ResController.do' />">
                     <input type="hidden" name="ganaar" value="status_keuze"/>
                     <table>
@@ -26,7 +26,7 @@
                                 Onkostnr.
                             </td>
                             <td>
-                                ${gevraagdeonkost.get(0).getOnr()}
+                                ${gevraagdeonkost.getOnr()}
                             </td>
                         </tr>
                         <tr>
@@ -58,7 +58,7 @@
                                 Bedrag
                             </td>
                             <td>
-                                €<input type="text" name="onr" value="${gevraagdeonkost.get(0).getBedrag()}"/>
+                                €<input type="text" name="bedrag" value="${gevraagdeonkost.getBedrag()}"/>
                             </td>
                         </tr>
                         <tr>
@@ -66,7 +66,7 @@
                                 Status
                             </td>
                             <td>
-                                ${gevraagdeonkost.get(0).getNaamStatus()}
+                                ${gevraagdeonkost.getNaamStatus()}
                             </td>
                         </tr>
                         <tr>
@@ -74,7 +74,7 @@
                                 Omschrijving
                             </td>
                             <td>
-                                <textarea name="onr"/>${gevraagdeonkost.get(0).getOmschrijving()}</textarea>
+                                <textarea name="omschr"/>${gevraagdeonkost.getOmschrijving()}</textarea>
                             </td>
                         </tr>
                     </table>
@@ -92,7 +92,7 @@
                                 Onkostnr.
                             </td>
                             <td>
-                                ${gevraagdeonkost.get(0).getOnr()}
+                                ${gevraagdeonkost.getOnr()}
                             </td>
                         </tr>
                         <tr>
@@ -100,7 +100,7 @@
                                 Kredietnr.
                             </td>
                             <td>
-                                ${gevraagdeonkost.get(0).getKnr().getKnr()}
+                                ${gevraagdeonkost.getKnr().getKnr()}
                             </td>
                         </tr>
                         <tr>
@@ -108,7 +108,7 @@
                                 Ingediend door werknemer nr.
                             </td>
                             <td>
-                                ${gevraagdeonkost.get(0).getWnr().getWnr()}
+                                ${gevraagdeonkost.getWnr().getWnr()}
                             </td>
                         </tr>
                         <tr>
@@ -116,7 +116,7 @@
                                 Datum ingediend
                             </td>
                             <td>
-                                <fmt:formatDate type="date" pattern="dd/MM/yyyy" value="${gevraagdeonkost.get(0).getDatum()}"/>
+                                <fmt:formatDate type="date" pattern="dd/MM/yyyy" value="${gevraagdeonkost.getDatum()}"/>
                             </td>
                         </tr>
                         <tr>
@@ -124,7 +124,7 @@
                                 Bedrag
                             </td>
                             <td>
-                                €${gevraagdeonkost.get(0).getBedrag()}
+                                €${gevraagdeonkost.getBedrag()}
                             </td>
                         </tr>
                         <tr>
@@ -132,7 +132,7 @@
                                 Status
                             </td>
                             <td>
-                                ${gevraagdeonkost.get(0).getNaamStatus()}
+                                ${gevraagdeonkost.getNaamStatus()}
                             </td>
                         </tr>
                         <tr>
@@ -140,7 +140,7 @@
                                 Omschrijving
                             </td>
                             <td>
-                                ${gevraagdeonkost.get(0).getOmschrijving()}
+                                ${gevraagdeonkost.getOmschrijving()}
                             </td>
                         </tr>
                     </table>

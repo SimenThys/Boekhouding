@@ -9,6 +9,7 @@ import beans.SessionBeanLocalInterface;
 import beans.SessionBeanRemoteInterface;
 import databaseBeans.Onkosten;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import java.util.List;
@@ -87,7 +88,7 @@ public class ResController extends HttpServlet {
         
         if(ganaar.equals("overzicht_status"))
         {
-            List onkost = localbean.OpvragenOnkost(Integer.parseInt(request.getParameter("vraagonkostop")));
+            Onkosten onkost = (Onkosten)localbean.OpvragenOnkost(Integer.parseInt(request.getParameter("vraagonkostop")));
             request.setAttribute("gevraagdeonkost",onkost);
             gotoPage("JSP-Werknemer/status.jsp",request,response);
         }
@@ -102,7 +103,7 @@ public class ResController extends HttpServlet {
             String keuze = request.getParameter("keuze");
             if(keuze.equals("Tijdelijk opslaan"))
             {
-                 Onkosten onkost = (Onkosten)localbean.OpvragenOnkost((int)request.getAttribute("onr")).get(0);
+                 Onkosten onkost = (Onkosten)localbean.OpvragenOnkost((int)request.getAttribute("onr"));
             }
             if(keuze.equals("Doorsturen"))
             {
