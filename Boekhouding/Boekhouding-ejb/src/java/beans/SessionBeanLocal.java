@@ -97,7 +97,10 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         em.persist(o);
         return;
     }
-    public void setBedrag(int bedrag,int onr){
-        
+    public void editOnkost(int bedrag,int onr,String omschrijving){
+        Onkosten onkost = OpvragenOnkost(onr);
+        onkost.setBedrag(new BigInteger(String.valueOf(bedrag)));
+        onkost.setOmschrijving(omschrijving);
+        em.persist(onkost);
     }
 }
