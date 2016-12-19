@@ -16,13 +16,13 @@
         <!--<link rel="icon" href="favicon.ico">-->
         <link href="css/algemeen.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">\
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href="css/algemeen.css" rel="stylesheet">
         <title>Welkom!</title>
     </head>
     <body>
     
-        <div class="container">
+        <!--<div class="container">-->
 
         <form class="form-signin" method="post" action="j_security_check">
             <h1>Geef uw gegevens om in te loggen</h1>
@@ -33,6 +33,6 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit" value="Volgend">Sign in</button>
         </form>
 
-        </div>
+        <!--</div>-->
     </body>
 </html>

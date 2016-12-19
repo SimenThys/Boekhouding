@@ -19,7 +19,7 @@
     </head>
     <body>
         <h1>Overzicht!</h1>
-        <table>
+        <table class="table table-striped">
             <tr>
                 <th>
                    Datum 
@@ -52,7 +52,7 @@
                     <form method="post" action="<c:url value='/ResController.do' />">
                         <input type="hidden" name="ganaar" value="overzicht_status"/>
                         <input type="hidden" name="vraagonkostop" value="${onkost.getOnr()}"/>
-                        <button type="submit">Bekijken</button>
+                        <button type="submit" class="btn btn-primary">Bekijk <span class="glyphicon glyphicon-search"></span></button>
                     </form>
                 </td>
                 <td>
@@ -60,7 +60,7 @@
                     <form method="post" action="<c:url value='/ResController.do' />">
                         <input type="hidden" name="ganaar" value="overzicht_overzicht"/>
                         <input type="hidden" name="verwijder" value="${onkost.getOnr()}"/>
-                        <button type="submit">Verwijderen</button>
+                        <button type="submit" class="btn btn-danger">Verwijder <span class="glyphicon glyphicon-remove"></span></button>
                     </form>
                     </c:if>    
                 </td>
@@ -69,7 +69,7 @@
         </table>
         <form method="post" action="<c:url value='/ResController.do' />">
             <input type="hidden" name="ganaar" value="overzicht_nieuw"/>
-            <button type="submit">Nieuwe Onkost</button>
+            <button type="submit" class="btn btn-primary">Nieuwe Onkost <span class="glyphicon glyphicon-file"></span></button>
         </form>
     </body>
 </html>
