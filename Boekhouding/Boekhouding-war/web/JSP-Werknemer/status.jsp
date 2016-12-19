@@ -78,6 +78,7 @@
                             </td>
                         </tr>
                     </table>
+                    <input type="submit" name="keuze" value="Vorige"/>
                     <input type="submit" name="keuze" value="Tijdelijk opslaan"/>
                     <input type="submit" name="keuze" value="Doorsturen"/>
                 </form>

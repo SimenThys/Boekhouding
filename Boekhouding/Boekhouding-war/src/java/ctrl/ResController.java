@@ -109,6 +109,10 @@ public class ResController extends HttpServlet {
             {
                 
             }
+            if(keuze.equals("Vorige"))
+            {
+                gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
+            }
         }
     }
     
