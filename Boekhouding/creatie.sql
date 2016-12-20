@@ -58,6 +58,12 @@ insert into Kredieten values (1,100,0,1);
 insert into Kredieten values (2,9900,0,1);
 insert into Kredieten values (3,500,1,1);
 insert into Kredieten values (4,10,1,1);
+
+insert into Rekening values (1,1);
+insert into Rekening values (1,2);
+insert into Rekening values (3,3);
+insert into Rekening values (4,4);
+
 insert into Onkosten values (1,1,3,'22/03/2016',10,0,'eerste onkost');
 insert into Onkosten values (2,1,3,'23/03/2016',20,1,'tweede onkost');
 insert into Onkosten values (3,1,3,'24/03/2016',30,2,'derde onkost');
