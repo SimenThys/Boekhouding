@@ -133,7 +133,7 @@ public class ResController extends HttpServlet {
                     {
                         ondernulk.add(entry.getKey());
                     }
-                }
+                }           
                 sessie.setAttribute("gewoonk", gewoonk);
                 sessie.setAttribute("ondernulk", ondernulk);
                 request.setAttribute("bedrag",request.getParameter("bedrag"));
