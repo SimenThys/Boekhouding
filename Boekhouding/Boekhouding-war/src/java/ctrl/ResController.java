@@ -125,6 +125,7 @@ public class ResController extends HttpServlet {
                 System.out.print(kredietmap);
                 for (Map.Entry<Kredieten, Integer> entry : kredietmap.entrySet())
                 {
+                    System.out.println(entry.getKey().getKnr());
                     if(entry.getValue()==0)
                     {
                         gewoonk.add(entry.getKey());
@@ -133,7 +134,7 @@ public class ResController extends HttpServlet {
                     {
                         ondernulk.add(entry.getKey());
                     }
-                }
+                }           
                 sessie.setAttribute("gewoonk", gewoonk);
                 sessie.setAttribute("ondernulk", ondernulk);
                 request.setAttribute("bedrag",request.getParameter("bedrag"));

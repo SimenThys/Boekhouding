@@ -50,14 +50,26 @@ create table Onkosten
 
 insert into Werknemer values (1,1, 'man',2);
 insert into Werknemer values (2,1, 'boek',1);
-insert into Werknemer values (3,1, 'werk',0);
-insert into Werknemer values (4,1, 'werk',0);
-insert into Werknemer values (5,1, 'werk',0);
+insert into Werknemer values (3,6, 'werk',0);
+insert into Werknemer values (4,6, 'werk',0);
+insert into Werknemer values (5,6, 'werk',0);
+insert into Werknemer values (6,1, 'man',2);
 
 insert into Kredieten values (1,100,0,1);
 insert into Kredieten values (2,9900,0,1);
 insert into Kredieten values (3,500,1,1);
 insert into Kredieten values (4,10,1,1);
+insert into Kredieten values (5,1,1,1);
+insert into Kredieten values (6,1,0,1);
+
+insert into Rekening values (1,1);
+insert into Rekening values (1,2);
+insert into Rekening values (6,3);
+insert into Rekening values (6,4);
+insert into Rekening values (1,5);
+insert into Rekening values (1,6);
+
+
 
 insert into Onkosten values (1,1,3,'2016-03-22',10,0,'eerste onkost');
 insert into Onkosten values (2,1,3,'2016-03-23',20,1,'tweede onkost');
