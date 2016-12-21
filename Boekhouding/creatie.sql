@@ -29,7 +29,7 @@ create table Kredieten
     foreign key(manager) references Werknemer(wnr));
 
 create Table Rekening
-    (wnr integer check (wnr IN (select wnr from Werknemer where typ = 2 OR typ = 3)),
+    (wnr integer check(wnr IN (select wnr from Werknemer w where w.wnr = value and (w.typ = 3 OR w.typ = 2))),
     knr integer,
     primary key(wnr,knr),
     foreign key(wnr) references Werknemer(wnr),
@@ -65,7 +65,7 @@ insert into Rekening values (1,1);
 insert into Rekening values (1,2);
 insert into Rekening values (6,3);
 insert into Rekening values (6,4);
-insert into Rekening values (4,5);
+insert into Rekening values (5,5);
 insert into Rekening values (1,6);
 
 insert into Onkosten values (1,1,3,'2016-03-22',10,0,'eerste onkost');
