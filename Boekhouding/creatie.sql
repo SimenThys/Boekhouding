@@ -69,8 +69,6 @@ insert into Rekening values (6,4);
 insert into Rekening values (1,5);
 insert into Rekening values (1,6);
 
-
-
 insert into Onkosten values (1,1,3,'2016-03-22',10,0,'eerste onkost');
 insert into Onkosten values (2,1,3,'2016-03-23',20,1,'tweede onkost');
 insert into Onkosten values (3,1,3,'2016-03-24',30,2,'derde onkost');
