@@ -58,11 +58,10 @@ insert into Kredieten values (1,100,0,1);
 insert into Kredieten values (2,9900,0,1);
 insert into Kredieten values (3,500,1,1);
 insert into Kredieten values (4,10,1,1);
-
 insert into Onkosten values (1,1,3,'2016-03-22',10,0,'eerste onkost');
 insert into Onkosten values (2,1,3,'2016-03-23',20,1,'tweede onkost');
 insert into Onkosten values (3,1,3,'2016-03-24',30,2,'derde onkost');
 
 insert into Onkosten values (4,2,2,'2016-03-25',10,0,'eerste onkost boek');
-insert into Onkosten values (5,2,2,'2016-03-26',20,1,'tweede onkost boek');
-insert into Onkosten values (6,2,2,'2016-03-27',30,2,'derde onkost boek');
+insert into Onkosten values (5,2,2,'2016-03-26',20,0,'tweede onkost boek');
+insert into Onkosten values (6,2,2,'2016-03-27',30,0,'derde onkost boek');

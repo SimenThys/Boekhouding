@@ -32,6 +32,11 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
+    public int OpvragenType(int wnr){
+        Werknemer w = em.find(Werknemer.class, new BigDecimal(wnr));
+        return w.getTyp().intValue();
+    }
+    
     public List OpvragenWerknemer(int wnr){
         Werknemer w = em.find(Werknemer.class, new BigDecimal(wnr));
         return em.createNamedQuery("Onkosten.findByWerknemer").setParameter("wnr", w).getResultList();
@@ -59,38 +64,97 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         for(Kredieten krediet : kredieten){
             if(krediet.getTyp().intValue() == 0){
                 if(krediet.getSaldo().intValue() - saldo >= 0)
-                    items.put(krediet, 0);
+                    items.put(krediet,0);
             }
             else{
                 if(krediet.getSaldo().intValue() - saldo >= 0)
-                    items.put(krediet, 0);
+                    items.put(krediet,0);
                 else
                     items.put(krediet,1);
             }
         }
         return items;
     }
-    public List OpvragenKrediet(int knr){
-        return em.createNamedQuery("Kredieten.findByKnr").setParameter("knr", new BigDecimal(knr)).getResultList();
+    public Kredieten OpvragenKrediet(int knr){
+        return (Kredieten)em.createNamedQuery("Kredieten.findByKnr").setParameter("knr", new BigDecimal(knr)).getSingleResult();
     }
-    public List OpvragenOnkost(int onr){
-        return em.createNamedQuery("Onkosten.findByOnr").setParameter("knr", new BigDecimal(onr)).getResultList();
+    public Onkosten OpvragenOnkost(int onr){
+        return (Onkosten)em.createNamedQuery("Onkosten.findByOnr").setParameter("onr", new BigDecimal(onr)).getSingleResult();
     }
     
-    
-    public void OnkostToevoegen(int knr, Date datum, int bedrag, String omschrijving){
+    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving){
         Onkosten o = new Onkosten();
         int lastNummer = ((BigDecimal)em.createNamedQuery("Onkosten.findMax").getSingleResult()).intValue();
         lastNummer += 1;
         BigDecimal onr =new BigDecimal(lastNummer);
         o.setOnr(onr);
-        Kredieten krediet = (Kredieten)em.createNamedQuery("Kredieten.findByKnr").setParameter("knr", new BigDecimal(knr)).getSingleResult();
-        o.setKnr(krediet);
-        o.setDatum(new Date());
+        Werknemer werknemer = (Werknemer)em.createNamedQuery("Werknemer.findByWnr").setParameter("wnr", new BigDecimal(wnr)).getSingleResult();
+        o.setWnr(werknemer);
         o.setBedrag(new BigInteger(String.valueOf(bedrag)));
         o.setOmschrijving(omschrijving);
         o.setStatus(new BigInteger(String.valueOf(0)));
         em.persist(o);
-        return;
+    }
+    
+    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving, int knr, Date datum, int status){
+        Onkosten o = new Onkosten();
+        int lastNummer = ((BigDecimal)em.createNamedQuery("Onkosten.findMax").getSingleResult()).intValue();
+        lastNummer += 1;
+        BigDecimal onr =new BigDecimal(lastNummer);
+        o.setOnr(onr);
+        Werknemer werknemer = (Werknemer)em.createNamedQuery("Werknemer.findByWnr").setParameter("wnr", new BigDecimal(wnr)).getSingleResult();
+        o.setWnr(werknemer);
+        o.setBedrag(new BigInteger(String.valueOf(bedrag)));
+        o.setOmschrijving(omschrijving);
+        o.setStatus(new BigInteger(String.valueOf(status)));
+        Kredieten krediet = (Kredieten)em.createNamedQuery("Krediet.findByKnr").setParameter("knr", new BigDecimal(knr)).getSingleResult();
+        o.setKnr(krediet);
+        o.setDatum(datum);
+        em.persist(o);
+    }
+    
+    public void OnkostToevoegen(Onkosten o){
+        em.persist(o);
+    }
+    
+    public void OnkostVerwijderen(int onr){
+        em.createNamedQuery("Onkosten.removeOnkost").setParameter("onr", new BigDecimal(onr)).executeUpdate();
+    }
+    
+    public void editOnkost(int bedrag, int onr, String omschrijving){
+        Onkosten onkost = OpvragenOnkost(onr);
+        onkost.setBedrag(new BigInteger(String.valueOf(bedrag)));
+        onkost.setOmschrijving(omschrijving);
+        em.persist(onkost);
+    }
+    
+    public Onkosten tempOnkost(int wnr){
+        Onkosten o = new Onkosten();
+        int lastNummer = ((BigDecimal)em.createNamedQuery("Onkosten.findMax").getSingleResult()).intValue();
+        lastNummer += 1;
+        BigDecimal onr =new BigDecimal(lastNummer);
+        o.setOnr(onr);
+        Werknemer werknemer = (Werknemer)em.createNamedQuery("Werknemer.findByWnr").setParameter("wnr", new BigDecimal(wnr)).getSingleResult();
+        o.setWnr(werknemer);
+        o.setOmschrijving("");
+        o.setBedrag(new BigInteger(String.valueOf(0)));
+        o.setDatum(new Date());
+        o.setStatus(new BigInteger(String.valueOf(0)));
+        return o;
+    }
+    
+    public Onkosten tempOnkost(int wnr,int bedrag,String omschr){
+        Onkosten o = new Onkosten();
+        int lastNummer = ((BigDecimal)em.createNamedQuery("Onkosten.findMax").getSingleResult()).intValue();
+        lastNummer += 1;
+        BigDecimal onr =new BigDecimal(lastNummer);
+        o.setOnr(onr);
+        Werknemer werknemer = (Werknemer)em.createNamedQuery("Werknemer.findByWnr").setParameter("wnr", new BigDecimal(wnr)).getSingleResult();
+        o.setWnr(werknemer);
+        o.setOmschrijving(omschr);
+        o.setBedrag(new BigInteger(String.valueOf(bedrag)));
+        o.setDatum(new Date());
+        o.setStatus(new BigInteger(String.valueOf(0)));
+        return o;
     }
 }

@@ -18,13 +18,16 @@
         <web-resource-collection>
             <web-resource-name>GeneralConstraint</web-resource-name>
             <description/>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/ResController.do</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>Administrator</role-name>
+            <role-name>Manager</role-name>
+            <role-name>Boekhouder</role-name>
+            <role-name>Werknemer</role-name>
+            <role-name>Boekhouder-Manager</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -92,10 +95,6 @@
     <security-role>
         <description>Kan eigen onkosten indienen, bewerken en verwijderen. </description>
         <role-name>Werknemer</role-name>
-    </security-role>
-    <security-role>
-        <description/>
-        <role-name>Administrator</role-name>
     </security-role>
     <security-role>
         <description>Heeft zowel de bevoegdheden van een Boekhouder als van een Manager</description>

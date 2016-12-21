@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Onkosten.findByBedrag", query = "SELECT o FROM Onkosten o WHERE o.bedrag = :bedrag"),
     @NamedQuery(name = "Onkosten.findByWerknemer", query = "SELECT o FROM Onkosten o WHERE o.wnr = :wnr"),
     @NamedQuery(name = "Onkosten.findByStatus", query = "SELECT o FROM Onkosten o WHERE o.status = :status"),
-    @NamedQuery(name = "Onkosten.findMax", query = "SELECT max(o.onr) from Onkosten o")})
+    @NamedQuery(name = "Onkosten.findMax", query = "SELECT max(o.onr) from Onkosten o"),
+    @NamedQuery(name = "Onkosten.removeOnkost", query = "DELETE FROM Onkosten o WHERE o.onr = :onr")})
 public class Onkosten implements Serializable {
 
     @Size(max = 100)
@@ -100,6 +101,20 @@ public class Onkosten implements Serializable {
 
     public BigInteger getStatus() {
         return status;
+    }
+    
+    public String getNaamStatus() {
+        int status2 = status.intValue();
+        if(status2 == 0)
+            return "In aanmaak";
+        if(status2 == 1)
+            return "Doorgestuurd";
+        if(status2 == 2)
+            return "Betaald";
+        if(status2 == 3)
+            return "Afgekeurd";
+        else
+            return "Geen status";
     }
 
     public void setStatus(BigInteger status) {

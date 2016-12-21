@@ -24,11 +24,18 @@ import javax.ejb.Local;
 @Local
 public interface SessionBeanLocalInterface {
     
+    public int OpvragenType(int wnr);
     public List OpvragenWerknemer(int wnr);
     public List OpvragenBoekhouder();
     public Map <Kredieten, Integer> OpvragenOnkostAanvragen(int wnr,int saldo);
     public Map <Kredieten, Integer> GetKredieten(Map<Kredieten, Integer> items,int wnr,int saldo);
-    public List OpvragenKrediet(int knr);
-    public List OpvragenOnkost(int onr);
-    public void OnkostToevoegen(int knr, Date datum, int bedrag, String omschrijving);
+    public Kredieten OpvragenKrediet(int knr);
+    public Onkosten OpvragenOnkost(int onr);
+    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving);
+    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving, int knr, Date datum, int status);    
+    public void OnkostToevoegen(Onkosten o);
+    public void OnkostVerwijderen(int onr);
+    public void editOnkost(int bedrag,int onr,String omschrijving);
+    public Onkosten tempOnkost(int wnr);
+    public Onkosten tempOnkost(int wnr,int bedrag,String omschr);
 }
