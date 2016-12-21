@@ -19,11 +19,11 @@
             <input type="hidden" name="bedrag" value="${bedrag}"/>
             <input type="hidden" name="omschr" value="${omschr}"/>
             <select name="knr">
-                <c:forEach var="knr" items="${gewoonk}">
-                    <option value="${krediet.getKnr()}">${krediet.getKnr} - (SALDO: ${krediet.getSaldo})</option>
+                <c:forEach var="krediet" items="${gewoonk}">
+                    <option value="${krediet.getKnr()}">${krediet.getKnr()} - (SALDO: ${krediet.getSaldo()})</option>
                 </c:forEach>
-                <c:forEach var="knr" items="${ondernulk}">
-                    <option style="background-color: red" value="${krediet.getKnr()}">${krediet.getKnr} - (SALDO: ${krediet.getSaldo})</option>
+                <c:forEach var="krediet" items="${ondernulk}">
+                    <option style="background-color: red" value="${krediet.getKnr()}">${krediet.getKnr()} - (SALDO: ${krediet.getSaldo()})</option>
                 </c:forEach>
             </select>
             <input type="submit" name="keuze" value="Vorige"/>
