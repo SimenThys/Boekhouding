@@ -70,7 +70,8 @@ public class ResController extends HttpServlet {
                         break;
                 case 1: gotoPage("JSP-Boekhouder/keuze-Boekhouder.jsp",request,response);
                         break;
-                case 2: gotoPage("JSP-Manager/keuze-Manager.jsp",request,response);
+                case 2: ganaar="werknemer_overzicht";
+                        //gotoPage("JSP-Manager/keuze-Manager.jsp",request,response);
                         break;
             }
         }

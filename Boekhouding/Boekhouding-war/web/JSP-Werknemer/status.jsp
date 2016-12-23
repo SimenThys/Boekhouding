@@ -5,7 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -60,32 +60,25 @@
                                     Datum ingediend
                                 </td>
                                 <td>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class='col-sm-6'>
-                                                <div class="form-group">
-                                                    <div class='input-group date' id='datetimepicker1'>
-                                                        <input type='text' class="form-control" />
-                                                        <span class="input-group-addon">Kalender 
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#datetimepicker1').datetimepicker({
-                    defaultDate: "11/1/2013",
-                    disabledDates: [
-                        moment("12/25/2013"),
-                        new Date(2013, 11 - 1, 21),
-                        "11/22/2013 00:53"
-                    ]
-                });
-                                                });
-                                            </script>
-                                        </div>
+                                    <div class='input-group date' id='datepicker'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
+                                    
+                                    <script type="text/javascript">
+                                        var today = new Date();
+                                        var tekst = today.getDate()+"/"+today.getMonth()+"/"+today.getFullYear();
+                                        console.log(today);
+                                        console.log(tekst);
+                                        $(function () {
+                                            $('#datepicker').datetimepicker({
+                                                defaultDate: 'now',
+                                                format: 'DD/MM/YYYY'
+                                            });
+                                        });
+                                    </script>
                                 </td>
                             </tr>
                             <tr>
@@ -93,7 +86,12 @@
                                     Bedrag
                                 </td>
                                 <td>
-                                    €<input type="text" name="bedrag" value="${gevraagdeonkost.getBedrag()}"/>
+                                    <div class='input-group date'>
+                                        <input type="text" class="form-control" name="bedrag" value="${gevraagdeonkost.getBedrag()}"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-euro"></span>
+                                        </span>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>

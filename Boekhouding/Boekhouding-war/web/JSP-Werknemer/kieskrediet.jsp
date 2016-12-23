@@ -4,11 +4,15 @@
     Author     : Simen
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="css/algemeen.css" rel="stylesheet">
         <title>Kies Krediet</title>
     </head>
     <body>
@@ -18,16 +22,47 @@
             <input type="hidden" name="onr" value="${onr}"/>
             <input type="hidden" name="bedrag" value="${bedrag}"/>
             <input type="hidden" name="omschr" value="${omschr}"/>
-            <select name="knr">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                       Kredietnummer 
+                    </th>
+                    <th>
+                       Saldo 
+                    </th>
+                    <th>
+                       Selecteer krediet 
+                    </th>
+                </tr>   
                 <c:forEach var="krediet" items="${gewoonk}">
-                    <option value="${krediet.getKnr()}">${krediet.getKnr()} - (SALDO: ${krediet.getSaldo()})</option>
+                    <tr>
+                        <td>
+                            ${krediet.getKnr()}
+                        </td>
+                        <td>
+                            ${krediet.getSaldo()}
+                        </td>
+                        <td>
+                            <input type="radio" name="krediet" value="${krediet.getKnr()}">
+                        </td>
+                    </tr>
                 </c:forEach>
                 <c:forEach var="krediet" items="${ondernulk}">
-                    <option style="background-color: red" value="${krediet.getKnr()}">${krediet.getKnr()} - (SALDO: ${krediet.getSaldo()})</option>
+                    <tr style="background-color: red">
+                        <td>
+                            ${krediet.getKnr()}
+                        </td>
+                        <td>
+                            ${krediet.getSaldo()}
+                        </td>
+                        <td>
+                            <input type="radio" name="krediet" value="${krediet.getKnr()}">
+                        </td>
+                    </tr>
                 </c:forEach>
-            </select>
-            <input type="submit" name="keuze" value="Vorige"/>
-            <input type="submit" name="keuze" value="Bevestigen"/>
+            </table>
+            <button class="btn btn-primary" type="submit" name="keuze" value="Vorige"><span class="glyphicon glyphicon-arrow-left"></span> Vorige</button>
+            <button class="btn btn-success" type="submit" name="keuze" value="Bevestigen">Bevestigen <span class="glyphicon glyphicon-ok"></span></button>
         </form>
     </body>
 </html>
