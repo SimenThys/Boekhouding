@@ -22,6 +22,7 @@
             <input type="hidden" name="onr" value="${onr}"/>
             <input type="hidden" name="bedrag" value="${bedrag}"/>
             <input type="hidden" name="omschr" value="${omschr}"/>
+            <input type="hidden" name="datum" value="${datum}"/>
             <table class="table table-striped">
                 <tr>
                     <th>
@@ -62,7 +63,7 @@
                 </c:forEach>
             </table>
             <button class="btn btn-primary" type="submit" name="keuze" value="Vorige"><span class="glyphicon glyphicon-arrow-left"></span> Vorige</button>
-            <button class="btn btn-success" type="submit" name="keuze" value="Bevestigen">Bevestigen <span class="glyphicon glyphicon-ok"></span></button>
+            <button class="btn btn-success" type="submit" name="keuze" value="Bevestig">Bevestigen <span class="glyphicon glyphicon-ok"></span></button>
         </form>
     </body>
 </html>

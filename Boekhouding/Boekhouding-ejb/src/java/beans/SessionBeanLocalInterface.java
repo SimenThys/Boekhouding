@@ -31,11 +31,10 @@ public interface SessionBeanLocalInterface {
     public Map <Kredieten, Integer> GetKredieten(Map<Kredieten, Integer> items,int wnr,int saldo);
     public Kredieten OpvragenKrediet(int knr);
     public Onkosten OpvragenOnkost(int onr);
-    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving);
-    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving, int knr, Date datum, int status);    
-    public void OnkostToevoegen(Onkosten o);
+    public Onkosten tempOnkost(int wnr,int onr,int bedrag,String omschr, String datum);
+    public void OnkostToevoegen(int wnr, int bedrag, String omschrijving, int status, String datum);   
     public void OnkostVerwijderen(int onr);
-    public void editOnkost(int bedrag,int onr,String omschrijving);
-    public Onkosten tempOnkost(int wnr);
-    public Onkosten tempOnkost(int wnr,int bedrag,String omschr);
+    public void editOnkost(int onr,int knr,int bedrag,String omschrijving, int status, String datum);
+    public void editKrediet(int knr,int bedrag);
+    
 }

@@ -40,7 +40,7 @@
             <c:forEach var="onkost" items="${onkosten}">
             <tr>
                 <td>
-                    <fmt:formatDate type="date" pattern="dd/MM/yyyy" value="${onkost.getDatum()}"/>
+                    <fmt:formatDate type="date" pattern="dd-MM-yyyy" value="${onkost.getDatum()}"/>
                 </td>
                 <td>
                     €${onkost.getBedrag()}

@@ -11,10 +11,14 @@ import databaseBeans.Kredieten;
 import databaseBeans.Onkosten;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.ejb.EJB;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -95,6 +99,13 @@ public class ResController extends HttpServlet {
             Onkosten onkost = (Onkosten)localbean.OpvragenOnkost(Integer.parseInt(request.getParameter("vraagonkostop")));
             request.setAttribute("isnieuw","oud");
             request.setAttribute("gevraagdeonkost",onkost);
+            
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+            String date;
+            date = df.format(onkost.getDatum());
+           
+            System.out.print("datum "+date);
+            request.setAttribute("datum",date);
             gotoPage("JSP-Werknemer/status.jsp",request,response);
         }
         
@@ -108,18 +119,21 @@ public class ResController extends HttpServlet {
             String keuze = request.getParameter("keuze");
             if(keuze.equals("Tijdelijk opslaan"))
             {   
-                if(Integer.parseInt(request.getParameter("bedrag"))!=0)
-                {
-                    if(request.getParameter("isnieuw").equals("nieuw"))
-                        localbean.OnkostToevoegen((int)sessie.getAttribute("wnr"),Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"));
-                    localbean.editOnkost(Integer.parseInt(request.getParameter("bedrag")),Integer.parseInt(request.getParameter("onr")),request.getParameter("omschr")); 
-                }
+                System.out.print("datum "+request.getParameter("datum"));
+                if(request.getParameter("isnieuw").equals("nieuw"))
+                    localbean.OnkostToevoegen((int)sessie.getAttribute("wnr"),Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"),0,request.getParameter("datum"));
+                localbean.editOnkost(Integer.parseInt(request.getParameter("onr")),-1,Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"),0,request.getParameter("datum")); 
+
                 List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
                 sessie.setAttribute("onkosten", onkosten);
                 gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
             }
             if(keuze.equals("Doorsturen"))
             {
+                if(request.getParameter("isnieuw").equals("nieuw"))
+                    localbean.OnkostToevoegen((int)sessie.getAttribute("wnr"),Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"),0,request.getParameter("datum"));
+                localbean.editOnkost(Integer.parseInt(request.getParameter("onr")),-1,Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"),0,request.getParameter("datum")); 
+
                 List gewoonk = new ArrayList<Kredieten>();
                 List ondernulk = new ArrayList<Kredieten>();
                 Map<Kredieten, Integer> kredietmap = localbean.OpvragenOnkostAanvragen((int)sessie.getAttribute("wnr"),Integer.parseInt(request.getParameter("bedrag")));
@@ -141,19 +155,25 @@ public class ResController extends HttpServlet {
                 request.setAttribute("bedrag",request.getParameter("bedrag"));
                 request.setAttribute("omschr",request.getParameter("omschr"));
                 request.setAttribute("onr",request.getParameter("onr"));
+                request.setAttribute("datum",request.getParameter("datum"));
                 gotoPage("JSP-Werknemer/kieskrediet.jsp",request,response);
             }
             if(keuze.equals("Vorige"))
             {
+                List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
+                sessie.setAttribute("onkosten", onkosten);
                 gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
             }
         }
             
         if(ganaar.equals("overzicht_nieuw"))
         {
-            Onkosten onkost = localbean.tempOnkost((int)sessie.getAttribute("wnr"));
+            Onkosten onkost = localbean.tempOnkost((int)sessie.getAttribute("wnr"),-1,0,"",null);
             request.setAttribute("isnieuw","nieuw");
             request.setAttribute("gevraagdeonkost",onkost);
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+            String datum = df.format(onkost.getDatum());
+            request.setAttribute("datum",datum);
             gotoPage("JSP-Werknemer/status.jsp",request,response);
         }
         
@@ -171,16 +191,19 @@ public class ResController extends HttpServlet {
             String keuze = request.getParameter("keuze");
             if(keuze.equals("Vorige"))
             {
-                Onkosten onkost = localbean.tempOnkost((int)sessie.getAttribute("wnr"),Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"));
+                Onkosten onkost = localbean.tempOnkost((int)sessie.getAttribute("wnr"),Integer.parseInt(request.getParameter("onr")),Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"),request.getParameter("datum"));
                 request.setAttribute("gevraagdeonkost",onkost);
+                DateFormat df = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+                String datum = df.format(onkost.getDatum());
+                request.setAttribute("datum",datum);
                 gotoPage("JSP-Werknemer/status.jsp",request,response);
             }
             if(keuze.equals("Bevestig"))
             {
-                if(Integer.parseInt(request.getParameter("bedrag"))!=0)
-                {
-                    localbean.OnkostToevoegen((int)sessie.getAttribute("wnr"),Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"),Integer.parseInt(request.getParameter("knr")),new Date(),Integer.parseInt(request.getParameter("status")));
-                }
+                localbean.editKrediet(Integer.parseInt(request.getParameter("krediet")),Integer.parseInt(request.getParameter("bedrag")));
+                localbean.editOnkost(Integer.parseInt(request.getParameter("onr")),Integer.parseInt(request.getParameter("krediet")),Integer.parseInt(request.getParameter("bedrag")),request.getParameter("omschr"),1,request.getParameter("datum")); 
+                List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
+                sessie.setAttribute("onkosten", onkosten);
                 gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
             }
             

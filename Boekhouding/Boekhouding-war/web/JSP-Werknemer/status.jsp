@@ -61,23 +61,22 @@
                                 </td>
                                 <td>
                                     <div class='input-group date' id='datepicker'>
-                                        <input type='text' class="form-control" />
+                                        <input type='text' class="form-control" name="datum"/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
                                     
                                     <script type="text/javascript">
-                                        var today = new Date();
-                                        var tekst = today.getDate()+"/"+today.getMonth()+"/"+today.getFullYear();
-                                        console.log(today);
-                                        console.log(tekst);
                                         $(function () {
+                                            var datum = new Date("${datum}");
+                                            console.log(datum);
                                             $('#datepicker').datetimepicker({
-                                                defaultDate: 'now',
-                                                format: 'DD/MM/YYYY'
+                                                defaultDate: datum,
+                                                format: 'DD-MM-YYYY'
                                             });
                                         });
+                                        
                                     </script>
                                 </td>
                             </tr>
@@ -113,7 +112,7 @@
                         </table>
                         <button class="btn btn-primary" type="submit" name="keuze" value="Vorige"><span class="glyphicon glyphicon-arrow-left"></span> Vorige</button>
                         <button class="btn btn-success" type="submit" name="keuze" value="Tijdelijk opslaan">Tijdelijk opslaan <span class="glyphicon glyphicon-floppy-disk"></span></button>
-                        <button class="btn btn-warning"type="submit" name="keuze" value="Doorsturen">Doorsturen <span class="glyphicon glyphicon-arrow-right"></span></button>
+                        <button class="btn btn-warning" type="submit" name="keuze" value="Doorsturen">Doorsturen <span class="glyphicon glyphicon-arrow-right"></span></button>
                     </form>
             </c:when>
             <%-- Anders: toon gegevens --%>
@@ -150,7 +149,7 @@
                                 Datum ingediend
                             </td>
                             <td>
-                                <fmt:formatDate type="date" pattern="dd/MM/yyyy" value="${gevraagdeonkost.getDatum()}"/>
+                                <fmt:formatDate type="date" pattern="dd-MM-yyyy" value="${gevraagdeonkost.getDatum()}"/>
                             </td>
                         </tr>
                         <tr>
