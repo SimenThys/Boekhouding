@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import javax.ejb.EJB;
 import java.util.List;
@@ -62,6 +63,8 @@ public class ResController extends HttpServlet {
         
         String ganaar = request.getParameter("ganaar");
         HttpSession sessie = request.getSession();
+        int reedsopgevraagd = 0;
+        String opgevraagd = null;
         
         if (ganaar == null){
             int wnr = Integer.parseInt(request.getUserPrincipal().getName());
@@ -72,26 +75,43 @@ public class ResController extends HttpServlet {
             {
                 case 0: ganaar="werknemer_overzicht";
                         break;
-                case 1: gotoPage("JSP-Boekhouder/keuze-Boekhouder.jsp",request,response);
+                case 1: ganaar="boekhouder_overzicht";
                         break;
-                case 2: ganaar="werknemer_overzicht";
-                        //gotoPage("JSP-Manager/keuze-Manager.jsp",request,response);
+                case 2: ganaar="boekhouder_overzicht";
+                        break;
+                case 3: ganaar="boekhouder_overzicht";
                         break;
             }
-        }
-        
-        if(ganaar.equals("boekhouder_krediet"))
-        {
-            List kredieten = localbean.OpvragenBoekhouder();
-            sessie.setAttribute("kredieten", kredieten);
-            gotoPage("JSP-Boekhouder/kredieten.jsp",request,response);
         }
         
         if(ganaar.equals("werknemer_overzicht"))
         {
             List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
             sessie.setAttribute("onkosten", onkosten);
+            int type = (int)sessie.getAttribute("type");
+            if(type == 1)
+                request.setAttribute("vorig","boek");
             gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
+            
+        }
+        
+        if(ganaar.equals("boekhouder_overzicht"))
+        {
+            gotoPage("JSP-Boekhouder/keuze-Boekhouder.jsp",request,response);
+        }
+        
+        if(ganaar.equals("beide_boek"))
+        {
+            reedsopgevraagd = 1;
+            opgevraagd = "boek";
+            ganaar = "boekhouder_krediet";
+        }
+        
+        if(ganaar.equals("beide_man"))
+        {
+            reedsopgevraagd = 1;
+            opgevraagd = "man";
+            ganaar = "manager_goedkeuren";
         }
         
         if(ganaar.equals("overzicht_status"))
@@ -106,6 +126,7 @@ public class ResController extends HttpServlet {
            
             System.out.print("datum "+date);
             request.setAttribute("datum",date);
+            request.setAttribute("vorig",request.getParameter("vorig"));
             gotoPage("JSP-Werknemer/status.jsp",request,response);
         }
         
@@ -160,9 +181,30 @@ public class ResController extends HttpServlet {
             }
             if(keuze.equals("Vorige"))
             {
-                List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
-                sessie.setAttribute("onkosten", onkosten);
-                gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
+
+                String vorig = request.getParameter("vorig");
+                if(vorig.equals("werk"))
+                {
+                    List onkosten = localbean.OpvragenWerknemer((int)sessie.getAttribute("wnr"));
+                    sessie.setAttribute("onkosten", onkosten);
+                    gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
+                }
+                if(vorig.equals("boek") || vorig.equals("krediet"))
+                {
+                    int knr = Integer.parseInt(request.getParameter("vraagkredietop"));
+                    Kredieten krediet = localbean.OpvragenKrediet(knr);
+                    List onkosten = localbean.OpvragenOnkosten(krediet,0);
+                    request.setAttribute("krediet", krediet);
+                    request.setAttribute("onkosten", onkosten);
+                    request.setAttribute("vorig",request.getParameter("vorig"));
+                    gotoPage("JSP-Boekhouder/kredietoverzicht.jsp",request,response);
+                }
+                else
+                {
+                    List onkosten = localbean.OpvragenDoorgestuurd((int)sessie.getAttribute("wnr"));
+                    sessie.setAttribute("onkosten", onkosten);
+                    gotoPage("JSP-Manager/kredietbeheerder.jsp",request,response);
+                }
             }
         }
             
@@ -174,6 +216,7 @@ public class ResController extends HttpServlet {
             DateFormat df = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
             String datum = df.format(onkost.getDatum());
             request.setAttribute("datum",datum);
+            request.setAttribute("vorig","werk");
             gotoPage("JSP-Werknemer/status.jsp",request,response);
         }
         
@@ -196,6 +239,7 @@ public class ResController extends HttpServlet {
                 DateFormat df = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
                 String datum = df.format(onkost.getDatum());
                 request.setAttribute("datum",datum);
+                request.setAttribute("vorig","werk");
                 gotoPage("JSP-Werknemer/status.jsp",request,response);
             }
             if(keuze.equals("Bevestig"))
@@ -207,6 +251,70 @@ public class ResController extends HttpServlet {
                 gotoPage("JSP-Werknemer/overzicht.jsp",request,response);
             }
             
+        }
+
+        if(ganaar.equals("boekhouder_krediet"))
+        {
+            String vorig;
+            if(reedsopgevraagd == 1)
+                vorig = opgevraagd;
+            else
+                vorig = request.getParameter("vorig");
+            if(vorig.equals("boek"))
+            {
+                List kredieten = localbean.OpvragenBoekhouder();
+                sessie.setAttribute("kredieten", kredieten);
+                gotoPage("JSP-Boekhouder/kredieten.jsp",request,response);
+            }
+            else
+            {
+                List onkosten = localbean.OpvragenDoorgestuurd((int)sessie.getAttribute("wnr"));
+                sessie.setAttribute("onkosten", onkosten);
+                gotoPage("JSP-Manager/kredietbeheerder.jsp",request,response);
+            }
+        }
+        
+        if(ganaar.equals("kredieten_status"))
+        {
+            String vorig = request.getParameter("vorig");
+            Kredieten krediet;
+            if(vorig.equals("krediet"))
+            {
+                int onr = Integer.parseInt(request.getParameter("vraagkredietop"));
+                krediet = localbean.OpvragenOnkost(onr).getKnr();
+            }
+            else 
+            {
+                int knr = Integer.parseInt(request.getParameter("vraagkredietop"));
+                krediet = localbean.OpvragenKrediet(knr);
+            }
+            
+            List onkosten = localbean.OpvragenOnkosten(krediet,0);
+            request.setAttribute("krediet", krediet);
+            request.setAttribute("onkosten", onkosten);
+            request.setAttribute("vorig",request.getParameter("vorig"));
+            gotoPage("JSP-Boekhouder/kredietoverzicht.jsp",request,response);
+        }
+        if(ganaar.equals("manager_goedkeuren"))
+        {
+            List onkosten = localbean.OpvragenDoorgestuurd((int)sessie.getAttribute("wnr"));
+            sessie.setAttribute("onkosten", onkosten);
+            gotoPage("JSP-Manager/kredietbeheerder.jsp",request,response);
+        }
+        if(ganaar.equals("onkost_keuren"))
+        {
+            int keuren = Integer.parseInt(request.getParameter("keuren"));
+            int onr = Integer.parseInt(request.getParameter("onkost"));
+            Onkosten onkost = localbean.OpvragenOnkost(onr);
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+            String datum = df.format(onkost.getDatum());
+            if(keuren == 2)
+                localbean.editOnkost(onr, onkost.getKnr().getKnr().intValue(),onkost.getBedrag().intValue(),onkost.getOmschrijving(),keuren,datum);
+            if(keuren == 3)
+                localbean.editOnkost(onr, onkost.getKnr().getKnr().intValue(),onkost.getBedrag().intValue(),onkost.getOmschrijving(),keuren,datum);
+            List onkosten = localbean.OpvragenDoorgestuurd((int)sessie.getAttribute("wnr"));
+            sessie.setAttribute("onkosten", onkosten);
+            gotoPage("JSP-Manager/kredietbeheerder.jsp",request,response);
         }
     }
     

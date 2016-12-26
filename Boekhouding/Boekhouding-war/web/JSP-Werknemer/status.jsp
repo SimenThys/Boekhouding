@@ -15,166 +15,111 @@
         <link href="css/algemeen.css" rel="stylesheet">
         <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
         <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-	<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+        <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
         <title>JSP Page</title>
     </head>
     <body>
         <h1>Status van onkost nr. ${gevraagdeonkost.getOnr()}</h1>
         <c:choose>
             <%-- Wanneer status in aanmaak is en de werknemer deze zelf heeft aangemaakt: toon formulier om aan te passen. --%>
-            <c:when test="${gevraagdeonkost.getStatus() == 0 and 
-                            gevraagdeonkost.getWnr().getWnr()== wnr}">
-                    <form  method="post" action="<c:url value='/ResController.do' />">
-                        <input type="hidden" name="ganaar" value="status_keuze"/>
-                        <input type="hidden" name="isnieuw" value="${isnieuw}"/>
-                        <table class="table table-striped">
-                            <tr>
-                                <td>
-                                    Onkostnr.
-                                </td>
-                                <td>
-                                    ${gevraagdeonkost.getOnr()}
-                                    <input type="hidden" name="onr" value="${gevraagdeonkost.getOnr()}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Kredietnr.
-                                </td>
-                                <td>
-                                    <%-- Nog niet gekozen, pas in volgende stap --%>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Werknemernr.
-                                </td>
-                                <td>
-                                    ${wnr}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Datum ingediend
-                                </td>
-                                <td>
-                                    <div class='input-group date' id='datepicker'>
-                                        <input type='text' class="form-control" name="datum"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                    
-                                    <script type="text/javascript">
-                                        $(function () {
-                                            var datum = new Date("${datum}");
-                                            console.log(datum);
-                                            $('#datepicker').datetimepicker({
-                                                defaultDate: datum,
-                                                format: 'DD-MM-YYYY'
-                                            });
-                                        });
-                                        
-                                    </script>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Bedrag
-                                </td>
-                                <td>
-                                    <div class='input-group date'>
-                                        <input type="text" class="form-control" name="bedrag" value="${gevraagdeonkost.getBedrag()}"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-euro"></span>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Status
-                                </td>
-                                <td>
-                                    ${gevraagdeonkost.getNaamStatus()}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Omschrijving
-                                </td>
-                                <td>
-                                    <textarea name="omschr"/>${gevraagdeonkost.getOmschrijving()}</textarea>
-                                </td>
-                            </tr>
-                        </table>
-                        <button class="btn btn-primary" type="submit" name="keuze" value="Vorige"><span class="glyphicon glyphicon-arrow-left"></span> Vorige</button>
-                        <button class="btn btn-success" type="submit" name="keuze" value="Tijdelijk opslaan">Tijdelijk opslaan <span class="glyphicon glyphicon-floppy-disk"></span></button>
-                        <button class="btn btn-warning" type="submit" name="keuze" value="Doorsturen">Doorsturen <span class="glyphicon glyphicon-arrow-right"></span></button>
-                    </form>
+            <c:when test="${gevraagdeonkost.getStatus() == 0 and gevraagdeonkost.getWnr().getWnr()== wnr}">
+                <form  method="post" action="<c:url value='/ResController.do' />">
+                    <input type="hidden" name="ganaar" value="status_keuze"/>
+                    <input type="hidden" name="isnieuw" value="${isnieuw}"/>
+                    <input type="hidden" name="onr" value="${gevraagdeonkost.getOnr()}"/>
+                    <input type="hidden" name="vorig" value="${vorig}"/>
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Onkostnr.</td>
+                            <td>${gevraagdeonkost.getOnr()}</td>
+                        </tr>
+                        <tr>
+                            <td>Kredietnr.</td>
+                            <td><%-- Nog niet gekozen, pas in volgende stap --%></td>
+                        </tr>
+                        <tr>
+                            <td>Werknemernr.</td>
+                            <td>${wnr}</td>
+                        </tr>
+                        <tr>
+                            <td>Datum ingediend</td>
+                            <td>
+                                <div class='input-group date' id='datepicker'>
+                                    <input type='text' class="form-control" name="datum"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        var datum = new Date("${datum}");
+                                        console.log(datum);
+                                        $('#datepicker').datetimepicker({defaultDate: datum, format: 'DD-MM-YYYY'});
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bedrag</td>
+                            <td>
+                                <div class='input-group date'>
+                                    <input type="text" class="form-control" name="bedrag" value="${gevraagdeonkost.getBedrag()}"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-euro"></span>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>${gevraagdeonkost.getNaamStatus()}</td>
+                        </tr>
+                        <tr>
+                            <td>Omschrijving</td>
+                            <td><textarea name="omschr"/>${gevraagdeonkost.getOmschrijving()}</textarea></td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-primary" type="submit" name="keuze" value="Vorige"><span class="glyphicon glyphicon-arrow-left"></span> Vorige</button>
+                    <button class="btn btn-success" type="submit" name="keuze" value="Tijdelijk opslaan">Tijdelijk opslaan <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                    <button class="btn btn-warning" type="submit" name="keuze" value="Doorsturen">Doorsturen <span class="glyphicon glyphicon-arrow-right"></span></button>
+                </form>
             </c:when>
             <%-- Anders: toon gegevens --%>
             <c:otherwise>
                 <form  method="post" action="<c:url value='/ResController.do' />">
-                    <input type="hidden" name="ganaar" value="status_overzicht"/>
+                    <input type="hidden" name="ganaar" value="status_keuze"/>
+                    <input type="hidden" name="vorig" value="${vorig}"/>
+                    <input type="hidden" name="vraagkredietop" value="${gevraagdeonkost.getKnr().getKnr()}"/>
                     <table class="table table-striped">
                         <tr>
-                            <td>
-                                Onkostnr.
-                            </td>
-                            <td>
-                                ${gevraagdeonkost.getOnr()}
-                            </td>
+                            <td>Onkostnr.</td>
+                            <td>${gevraagdeonkost.getOnr()}</td>
                         </tr>
                         <tr>
-                            <td>
-                                Kredietnr.
-                            </td>
-                            <td>
-                                ${gevraagdeonkost.getKnr().getKnr()}
-                            </td>
+                            <td>Kredietnr.</td>
+                            <td>${gevraagdeonkost.getKnr().getKnr()}</td>
                         </tr>
                         <tr>
-                            <td>
-                                Ingediend door werknemer nr.
-                            </td>
-                            <td>
-                                ${gevraagdeonkost.getWnr().getWnr()}
-                            </td>
+                            <td>Ingediend door werknemer nr.</td>
+                            <td>${gevraagdeonkost.getWnr().getWnr()}</td>
                         </tr>
                         <tr>
-                            <td>
-                                Datum ingediend
-                            </td>
-                            <td>
-                                <fmt:formatDate type="date" pattern="dd-MM-yyyy" value="${gevraagdeonkost.getDatum()}"/>
-                            </td>
+                            <td> Datum ingediend</td>
+                            <td><fmt:formatDate type="date" pattern="dd-MM-yyyy" value="${gevraagdeonkost.getDatum()}"/></td>
                         </tr>
                         <tr>
-                            <td>
-                                Bedrag
-                            </td>
-                            <td>
-                                €${gevraagdeonkost.getBedrag()}
-                            </td>
+                            <td>Bedrag</td>
+                            <td>€${gevraagdeonkost.getBedrag()}</td>
                         </tr>
                         <tr>
-                            <td>
-                                Status
-                            </td>
-                            <td>
-                                ${gevraagdeonkost.getNaamStatus()}
-                            </td>
+                            <td>Status</td>
+                            <td>${gevraagdeonkost.getNaamStatus()}</td>
                         </tr>
                         <tr>
-                            <td>
-                                Omschrijving
-                            </td>
-                            <td>
-                                ${gevraagdeonkost.getOmschrijving()}
-                            </td>
+                            <td>Omschrijving</td>
+                            <td>${gevraagdeonkost.getOmschrijving()}</td>
                         </tr>
                     </table>
                     <button class="btn btn-primary" type="submit" name="keuze" value="Vorige"><span class="glyphicon glyphicon-arrow-left"></span> Vorige</button>

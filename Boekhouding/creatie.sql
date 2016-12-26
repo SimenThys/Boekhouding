@@ -47,7 +47,7 @@ create table Onkosten
     foreign key(wnr) references Werknemer(wnr),
     foreign key(knr) references Kredieten(knr));
 
-insert into Werknemer values (1,1, 'man',2);
+insert into Werknemer values (1,1, 'man',3);
 insert into Werknemer values (2,1, 'boek',1);
 insert into Werknemer values (3,6, 'werk',0);
 insert into Werknemer values (4,6, 'werk',0);
@@ -63,8 +63,8 @@ insert into Kredieten values (6,1,0,1);
 
 insert into Rekening values (1,1);
 insert into Rekening values (1,2);
-insert into Rekening values (6,3);
-insert into Rekening values (6,4);
+insert into Rekening values (1,3);
+insert into Rekening values (1,4);
 insert into Rekening values (1,5);
 insert into Rekening values (1,6);
 

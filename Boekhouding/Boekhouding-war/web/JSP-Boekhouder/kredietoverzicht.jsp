@@ -1,7 +1,7 @@
 <%-- 
-    Document   : keuze
-    Created on : 12-dec-2016, 15:06:29
-    Author     : student
+    Document   : kredietoverzicht
+    Created on : 24-dec-2016, 15:54:23
+    Author     : Ben
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,34 +16,43 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Kredieten</h1>
+        <h1>Overzicht van krediet nummer ${krediet.getKnr()}</h1>  
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <th>knr</th>
-                    <th>Saldo</th>
-                    <th>Type: 1=gewaarborgd</th>
+                    <th>onr</th>
+                    <th>Bedrag</th>
+                    <th>Status</th>
                     <th>Bekijken</th>
                 </tr>
-                <c:forEach var="krediet" items="${kredieten}">
+                <c:forEach var="onkost" items="${onkosten}">
                     <tr>
-                        <td>${krediet.getKnr()}</td>
-                        <td>${krediet.getSaldo()}</td>
-                        <td>${krediet.getTyp()}</td>
+                        <td>${onkost.getOnr()}</td>
+                        <td>${onkost.getBedrag()}</td>
+                        <td>${onkost.getStatus()}</td>
                         <td>
                             <form method="post" action="<c:url value='/ResController.do' />">
-                                <input type="hidden" name="vorig" value="boek"/>
-                                <input type="hidden" name="ganaar" value="kredieten_status"/>
-                                <input type="hidden" name="vraagkredietop" value="${krediet.getKnr()}"/>
+                                <input type="hidden" name="vorig" value="${vorig}"/>
+                                <input type="hidden" name="ganaar" value="overzicht_status"/>
+                                <input type="hidden" name="vraagonkostop" value="${onkost.getOnr()}"/>
                                 <button type="submit" class="btn btn-primary">Bekijk <span class="glyphicon glyphicon-search"></span></button>
                             </form>
                         </td>
                     </tr>
                 </c:forEach>
+                <tr>
+                    <th colspan="2">knr</th>
+                    <th colspan="2">Saldo</th>
+                </tr>
+                <tr>
+                    <th colspan="2">${krediet.getKnr()}</th>
+                    <th colspan="2">${krediet.getSaldo()}</th>
+                </tr>
             </tbody>
         </table>
         <form method="post" action="<c:url value='/ResController.do' />">
-            <input type="hidden" name="ganaar" value="boekhouder_overzicht"/>
+            <input type="hidden" name="ganaar" value="boekhouder_krediet"/>
+            <input type="hidden" name="vorig" value="${vorig}"/>
             <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-arrow-left"></span> Vorige</button>
         </form>
     </body>

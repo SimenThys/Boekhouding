@@ -84,7 +84,30 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
     public Kredieten OpvragenKrediet(int knr){
         return (Kredieten)em.createNamedQuery("Kredieten.findByKnr").setParameter("knr", new BigDecimal(knr)).getSingleResult();
     }
-    
+    public List OpvragenDoorgestuurd(int wnr)
+    {
+        Werknemer w = em.find(Werknemer.class, new BigDecimal(wnr));
+        Collection<Kredieten> kredieten = w.getKredietenCollection();
+        List lijst = new ArrayList<Onkosten>();
+        for(Kredieten krediet : kredieten)
+        {
+            Collection<Onkosten> onkosten = krediet.getOnkostenCollection();
+            for(Onkosten onkost : onkosten)
+            {
+                if(onkost.getStatus().intValue() == 1)
+                    lijst.add(onkost); 
+            }  
+        }
+        return lijst;
+    }
+
+    public List OpvragenOnkosten(Kredieten krediet,int doorgestuurd)
+    {
+        List lijst = new ArrayList<Onkosten>();
+        Collection<Onkosten> onkosten = krediet.getOnkostenCollection();
+        for(Onkosten onkost : onkosten){lijst.add(onkost);}
+        return lijst;
+    }
     public Onkosten OpvragenOnkost(int onr){
         return (Onkosten)em.createNamedQuery("Onkosten.findByOnr").setParameter("onr", new BigDecimal(onr)).getSingleResult();
     }
@@ -156,7 +179,14 @@ public class SessionBeanLocal implements SessionBeanLocalInterface {
         onkost.setOmschrijving(omschrijving);
         onkost.setStatus(new BigInteger(String.valueOf(status)));
         if(knr > -1)
+        {
             onkost.setKnr(OpvragenKrediet(knr));
+            Kredieten krediet = onkost.getKnr();
+            Collection<Onkosten> collectie = krediet.getOnkostenCollection();
+            collectie.remove(onkost);
+            collectie.add(onkost);
+            onkost.getKnr().setOnkostenCollection(collectie);
+        }
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         Date date;
         try {

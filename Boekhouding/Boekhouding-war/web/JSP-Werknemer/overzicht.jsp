@@ -21,55 +21,46 @@
         <h1>Overzicht!</h1>
         <table class="table table-striped">
             <tr>
-                <th>
-                   Datum 
-                </th>
-                <th>
-                   Bedrag 
-                </th>
-                <th>
-                   Status 
-                </th>
-                <th>
-                   Bekijken/Bewerken
-                </th>
-                <th>
-                   Verwijderen
-                </th>
+                <th>Datum</th>
+                <th>Bedrag</th>
+                <th>Status</th>
+                <th>Bekijken/Bewerken</th>
+                <th>Verwijderen</th>
             </tr>
             <c:forEach var="onkost" items="${onkosten}">
-            <tr>
-                <td>
-                    <fmt:formatDate type="date" pattern="dd-MM-yyyy" value="${onkost.getDatum()}"/>
-                </td>
-                <td>
-                    €${onkost.getBedrag()}
-                </td>
-                <td>
-                    ${onkost.getNaamStatus()}
-                </td>
-                <td>
-                    <form method="post" action="<c:url value='/ResController.do' />">
-                        <input type="hidden" name="ganaar" value="overzicht_status"/>
-                        <input type="hidden" name="vraagonkostop" value="${onkost.getOnr()}"/>
-                        <button type="submit" class="btn btn-primary">Bekijk <span class="glyphicon glyphicon-search"></span></button>
-                    </form>
-                </td>
-                <td>
-                    <c:if test="${onkost.getStatus()==0}">
-                    <form method="post" action="<c:url value='/ResController.do' />">
-                        <input type="hidden" name="ganaar" value="overzicht_overzicht"/>
-                        <input type="hidden" name="verwijder" value="${onkost.getOnr()}"/>
-                        <button type="submit" class="btn btn-danger">Verwijder <span class="glyphicon glyphicon-remove"></span></button>
-                    </form>
-                    </c:if>    
-                </td>
-            </tr>
+                <tr>
+                    <td><fmt:formatDate type="date" pattern="dd-MM-yyyy" value="${onkost.getDatum()}"/></td>
+                    <td>€${onkost.getBedrag()}</td>
+                    <td>${onkost.getNaamStatus()}</td>
+                    <td>
+                        <form method="post" action="<c:url value='/ResController.do' />">
+                            <input type="hidden" name="ganaar" value="overzicht_status"/>
+                            <input type="hidden" name="vorig" value="werk"/>
+                            <input type="hidden" name="vraagonkostop" value="${onkost.getOnr()}"/>
+                            <button type="submit" class="btn btn-primary">Bekijk <span class="glyphicon glyphicon-search"></span></button>
+                        </form>
+                    </td>
+                    <td>
+                        <c:if test="${onkost.getStatus()==0}">
+                            <form method="post" action="<c:url value='/ResController.do' />">
+                                <input type="hidden" name="ganaar" value="overzicht_overzicht"/>
+                                <input type="hidden" name="verwijder" value="${onkost.getOnr()}"/>
+                                <button type="submit" class="btn btn-danger">Verwijder <span class="glyphicon glyphicon-remove"></span></button>
+                            </form>
+                        </c:if>    
+                    </td>
+                </tr>
             </c:forEach>
         </table>
         <form method="post" action="<c:url value='/ResController.do' />">
             <input type="hidden" name="ganaar" value="overzicht_nieuw"/>
             <button type="submit" class="btn btn-primary">Nieuwe Onkost <span class="glyphicon glyphicon-file"></span></button>
         </form>
+         <c:if test="${type==1||type==2||type==3}">    
+            <form method="post" action="<c:url value='/ResController.do' />">
+                <input type="hidden" name="ganaar" value="boekhouder_overzicht"/>
+                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-arrow-left"></span> Vorige</button>
+            </form>
+        </c:if>
     </body>
 </html>

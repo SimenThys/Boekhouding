@@ -25,40 +25,22 @@
             <input type="hidden" name="datum" value="${datum}"/>
             <table class="table table-striped">
                 <tr>
-                    <th>
-                       Kredietnummer 
-                    </th>
-                    <th>
-                       Saldo 
-                    </th>
-                    <th>
-                       Selecteer krediet 
-                    </th>
+                    <th>Kredietnummer </th>
+                    <th>Saldo</th>
+                    <th>Selecteer krediet</th>
                 </tr>   
                 <c:forEach var="krediet" items="${gewoonk}">
                     <tr>
-                        <td>
-                            ${krediet.getKnr()}
-                        </td>
-                        <td>
-                            ${krediet.getSaldo()}
-                        </td>
-                        <td>
-                            <input type="radio" name="krediet" value="${krediet.getKnr()}">
-                        </td>
+                        <td>${krediet.getKnr()}</td>
+                        <td>${krediet.getSaldo()}</td>
+                        <td><input type="radio" name="krediet" value="${krediet.getKnr()}"></td>
                     </tr>
                 </c:forEach>
                 <c:forEach var="krediet" items="${ondernulk}">
                     <tr style="background-color: red">
-                        <td>
-                            ${krediet.getKnr()}
-                        </td>
-                        <td>
-                            ${krediet.getSaldo()}
-                        </td>
-                        <td>
-                            <input type="radio" name="krediet" value="${krediet.getKnr()}">
-                        </td>
+                        <td>${krediet.getKnr()}</td>
+                        <td>${krediet.getSaldo()}</td>
+                        <td><input type="radio" name="krediet" value="${krediet.getKnr()}"></td>
                     </tr>
                 </c:forEach>
             </table>
