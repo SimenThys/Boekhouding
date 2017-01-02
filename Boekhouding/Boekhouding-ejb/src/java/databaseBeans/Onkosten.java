@@ -151,7 +151,8 @@ public class Onkosten implements Serializable {
 
     @Override
     public String toString() {
-        return "databaseBeans.Onkosten[ onr=" + onr + " ]";
+        String s = "Onkost nr " + onr + ", ingediend op " + datum + "door werknemer " + wnr.getWnr() + " voor een bedrag van " + bedrag + ", status=" + this.getNaamStatus();
+        return s;
     }
 
     public Werknemer getWnr() {
