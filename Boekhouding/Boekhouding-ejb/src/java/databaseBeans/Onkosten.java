@@ -8,6 +8,7 @@ package databaseBeans;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -151,7 +152,9 @@ public class Onkosten implements Serializable {
 
     @Override
     public String toString() {
-        String s = "Onkost nr " + onr + ", ingediend op " + datum + "door werknemer " + wnr.getWnr() + " voor een bedrag van " + bedrag + ", status=" + this.getNaamStatus();
+        SimpleDateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
+        String date = dt.format(datum);
+        String s = "Onkost nr " + onr + ", ingediend op " + date + " door werknemer " + wnr.getWnr() + " voor een bedrag van €" + bedrag + ", status=" + this.getNaamStatus();
         return s;
     }
 

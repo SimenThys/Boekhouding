@@ -25,6 +25,7 @@ public class SessionBeanRemote implements SessionBeanRemoteInterface {
     @PersistenceContext private EntityManager em;
     public String OpvragenKrediet(int knr)
     {
+        System.out.println("init");
         String overzicht = "";
         Kredieten k = (Kredieten)em.createNamedQuery("Kredieten.findByKnr").setParameter("knr", new BigDecimal(knr)).getSingleResult();
         overzicht += k.toString();
@@ -37,6 +38,7 @@ public class SessionBeanRemote implements SessionBeanRemoteInterface {
         for (Object o : lijst) 
         {
             Onkosten onk = (Onkosten)o;
+            overzicht += "\t";
             overzicht += onk.toString();
             overzicht += "\n";
         }

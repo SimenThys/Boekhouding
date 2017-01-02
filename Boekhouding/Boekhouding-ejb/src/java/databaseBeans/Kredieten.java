@@ -136,7 +136,7 @@ public class Kredieten implements Serializable {
 
     @Override
     public String toString() {
-        return "Kredieten met knr " + knr + " heeft een saldo van" + saldo;
+        return "Krediet nr " + knr + " heeft een saldo van €" + saldo;
     }
     
 }

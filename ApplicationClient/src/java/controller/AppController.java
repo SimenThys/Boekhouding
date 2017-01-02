@@ -22,7 +22,7 @@ public class AppController implements ActionListener{
      * @param args the command line arguments
      */
     @EJB
-    private SessionBeanRemoteInterface remotebean;
+    private static SessionBeanRemoteInterface remotebean;
     
     
     
@@ -40,6 +40,6 @@ public class AppController implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         int knr = Integer.parseInt(view.getKredietvakje().getText());
         String s = remotebean.OpvragenKrediet(knr);
-        System.out.println(knr);
+        System.out.println(s);
     }
 }
